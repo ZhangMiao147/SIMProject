@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".SIMApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,7 +14,7 @@
         android:theme="@style/Theme.SIMProject"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.simoffer.SIMofferActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SIMProject.NoActionBar">
@@ -27,6 +28,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name=".ui.detail.DetailActivity"/>
     </application>
 
 </manifest>

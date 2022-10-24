@@ -11,6 +11,13 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.SIMProject.AppBarOverlay">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="ceshi"
+            />
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"

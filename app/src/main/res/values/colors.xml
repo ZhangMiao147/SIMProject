@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="color_app_bar_bg">#2D2042</color>
+    <color name="color_d20e56">#D20E56</color>
+    <color name="sim_offers_shopping_bg">#45365F</color>
 </resources>
