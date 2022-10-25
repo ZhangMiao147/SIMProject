@@ -14,9 +14,10 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.SIMProject.NoActionBar">
+    <style name="Theme.SIMProject.NoActionBar" parent="Theme.AppCompat.Light">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorControlNormal">#D40154</item>
     </style>
 
     <style name="Theme.SIMProject.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

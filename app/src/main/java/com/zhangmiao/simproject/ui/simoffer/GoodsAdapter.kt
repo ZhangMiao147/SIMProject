@@ -15,7 +15,7 @@ import com.zhangmiao.simproject.logic.model.Good
  */
 class GoodsAdapter(
     var goodsList: List<Good> = ArrayList<Good>(),
-    val viewModel: SIMOfferViewModel
+    val callback:GoodCallback
 ) : RecyclerView.Adapter<GoodsAdapter.GoodsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoodsViewHolder {
@@ -37,7 +37,10 @@ class GoodsAdapter(
             holder.tv_priceInitial.visibility = View.INVISIBLE
         }
         holder.iv_shopping.setOnClickListener {
-            viewModel.addShoppingData(good)
+            callback.addShopping(good)
+        }
+        holder.itemView.setOnClickListener{
+            callback.gotoDetail(good)
         }
     }
 
@@ -50,4 +53,10 @@ class GoodsAdapter(
         val tv_priceFinal: TextView = view.findViewById(R.id.item_good_price_final_tv)
         val iv_shopping: ImageView = view.findViewById(R.id.item_good_shopping_iv)
     }
+
+    open interface GoodCallback{
+        fun addShopping(good: Good)
+        fun gotoDetail(good: Good)
+    }
+
 }

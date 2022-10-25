@@ -3,26 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/SIMOfferFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.zhangmiao.simproject.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/SIMOfferFragment"
+        android:name="com.zhangmiao.simproject.ui.simoffer.SIMOfferFragment"
+        android:label="@string/sim_offer_fragment_label"
+        tools:layout="@layout/fragment_sim_offer">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_SIMOfferFragment_to_DetailFragment"
+            app:destination="@id/DetailFragment"
+            />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.zhangmiao.simproject.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/DetailFragment"
+        android:name="com.zhangmiao.simproject.ui.detail.DetailFragment"
+        android:label=""
+        tools:layout="@layout/fragment_detail">
+        <argument android:name="good"
+            app:argType="com.zhangmiao.simproject.logic.model.Good" />
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_DetailFragment_to_SIMOfferFragment"
+            app:destination="@id/SIMOfferFragment" />
     </fragment>
 </navigation>
