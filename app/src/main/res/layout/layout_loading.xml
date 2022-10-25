@@ -2,5 +2,4 @@
 <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_loading_loading_pb"
     android:layout_width="64dp"
-    android:layout_centerInParent="true"
     android:layout_height="64dp"/>

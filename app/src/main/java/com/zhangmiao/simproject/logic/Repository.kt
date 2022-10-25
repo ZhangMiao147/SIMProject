@@ -2,11 +2,14 @@ package com.zhangmiao.simproject.logic
 
 import android.util.Log
 import androidx.lifecycle.liveData
+import com.google.gson.Gson
 import com.zhangmiao.simproject.logic.model.GetOffersResponse
 import com.zhangmiao.simproject.logic.model.Good
+import com.zhangmiao.simproject.logic.model.Offer
+import com.zhangmiao.simproject.logic.model.OffersRequest
 import com.zhangmiao.simproject.logic.network.OffersNetwork
 import kotlinx.coroutines.Dispatchers
-import java.lang.Exception
+import org.json.JSONObject
 
 object Repository {
 
@@ -14,10 +17,10 @@ object Repository {
 
     fun getOffers(type: String, operator_name: String) = liveData(Dispatchers.IO) {
         val result = try {
-            val offersResponse = OffersNetwork.getOffers(type, operator_name)
-            Log.d(TAG,"getOffers offersResponse:${offersResponse}")
-            val goods:List<Good> = switchToGoods(offersResponse)
-            Log.d(TAG,"getOffers goods:${goods}")
+            val offersResponse = OffersNetwork.getOffers(OffersRequest(type, operator_name))
+            Log.d(TAG, "getOffers offersResponse:${offersResponse}")
+            val goods: List<Good> = switchToGoods(offersResponse)
+            Log.d(TAG, "getOffers goods:${goods}")
             Result.success(goods)
         } catch (e: Exception) {
             Result.failure<List<Good>>(e)
@@ -26,11 +29,31 @@ object Repository {
     }
 
     /**
-     * 将网络请求数据转换为展示数据
+     * network data switch show data
      */
-    fun switchToGoods(getOffersResponse: GetOffersResponse):ArrayList<Good>{
-        var goods: ArrayList<Good> = ArrayList<Good>()
-        Log.d(TAG,"switchToGoods goods:${goods}")
+    fun switchToGoods(getOffersResponse: GetOffersResponse): ArrayList<Good> {
+        val goods: ArrayList<Good> = ArrayList()
+        val gson = Gson()
+        val offerById: String = gson.toJson(getOffersResponse.offer_by_id)
+        try {
+            val offerByIdObject = JSONObject(offerById)
+            val keys = offerByIdObject.keys()
+            keys.forEach {
+                val offerObject = offerByIdObject.getJSONObject(it)
+                val offer: Offer = gson.fromJson(offerObject.toString(), Offer::class.java)
+                val good = Good(
+                    offer.id,
+                    offer.data.name,
+                    offer.amount_breakdown.initial.toInt(),
+                    offer.amount_breakdown.final.toInt(),
+                    offer.amount_breakdown.discount.toInt()
+                )
+                goods.add(good)
+            }
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
+
         return goods
     }
 }

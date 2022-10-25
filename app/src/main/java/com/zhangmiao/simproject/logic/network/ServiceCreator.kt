@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object ServiceCreator {
 
-    private const val BASE_URL="http://api-dc94.lotusflare.com/"
+    private const val BASE_URL="https://api-dc94.lotusflare.com"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)

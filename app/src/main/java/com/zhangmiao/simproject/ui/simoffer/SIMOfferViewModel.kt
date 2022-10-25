@@ -1,5 +1,6 @@
 package com.zhangmiao.simproject.ui.simoffer
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -15,7 +16,8 @@ class SIMOfferViewModel : ViewModel() {
 
     val goodList = ArrayList<Good>()
 
-    val goodLiveData = Transformations.switchMap(this.getLiveData) { offersRequest ->
+    val goodLiveData = Transformations.switchMap(this.getLiveData){ offersRequest ->
+        Log.d("SIMOfferViewModel","switchMap getOffers")
         Repository.getOffers(offersRequest.type, offersRequest.operator_name)
     }
 
@@ -26,74 +28,69 @@ class SIMOfferViewModel : ViewModel() {
     /* ------- 购物车 --------- */
     val shoppingList = MutableLiveData<ArrayList<ShoppingGood>>()
 
+
     fun addShoppingData(good: Good) {
         var shoppingGoods = shoppingList.value
-        var shoppingGood: ShoppingGood =
+        val shoppingGood =
             ShoppingGood(good.id, good.name, good.amount_final, 1, true)
-        if (shoppingGoods != null) {
-            val index = shoppingGoods.indexOf(shoppingGood)
-            if (index != -1) {
-                val oldGood = shoppingGoods.get(index)
-                oldGood.num++
-            } else {
-                shoppingGoods.add(shoppingGood)
-            }
-        } else {
+        val index = shoppingGoods?.indexOf(shoppingGood) ?: -1
+        if (shoppingGoods == null){
             shoppingGoods = ArrayList<ShoppingGood>()
+        }
+        if (index != -1) {
+            val oldGood = shoppingGoods.get(index)
+            oldGood.num++
+        } else {
             shoppingGoods.add(shoppingGood)
         }
     }
 
-    fun addShoppingGoodNum(goodId:String){
-        var shoppingGoods = shoppingList.value
+    fun addShoppingGoodNum(goodId: String) {
+        val shoppingGoods = shoppingList.value
         shoppingGoods?.forEach {
             it.num++
         }
     }
 
-    fun reduceShoppingGoodNum(goodId: String){
-        var shoppingGoods = shoppingList.value
+    fun reduceShoppingGoodNum(goodId: String) {
+        val shoppingGoods = shoppingList.value
         shoppingGoods?.forEach {
             it.num--
         }
     }
 
-    fun getSelectNum():Int {
+    fun getSelectNum(): Int {
         var num = 0
-        var shoppingGoods = shoppingList.value
+        val shoppingGoods = shoppingList.value
         shoppingGoods?.forEach {
-            if (it.select){
-                num+= it.num
+            if (it.select) {
+                num += it.num
             }
         }
         return num
     }
 
-    fun getTotalAmount():Int{
+    fun getTotalAmount(): Int {
         var totalAmount = 0
-        var shoppingGoods = shoppingList.value
+        val shoppingGoods = shoppingList.value
         shoppingGoods?.forEach {
-            if (it.select){
-                totalAmount+= it.amount
+            if (it.select) {
+                totalAmount += it.amount
             }
         }
         return totalAmount
     }
 
-    fun clearShoppingGoods(){
+    fun clearShoppingGoods() {
         shoppingList.value?.clear()
     }
 
-    fun selectAllShoppingGoods(){
-        var shoppingGoods = shoppingList.value
+    fun selectAllShoppingGoods() {
+        val shoppingGoods = shoppingList.value
         shoppingGoods?.forEach {
             it.select = true
         }
     }
-
-
-
-
 
 
 }

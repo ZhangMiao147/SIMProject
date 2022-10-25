@@ -1,17 +1,19 @@
 package com.zhangmiao.simproject.logic.model
 
+import java.util.Objects
+
 data class GetOffersResponse(
     val timestamp: Long,
     val request_id: String,
     val server_time: Long,
-    val service_by_id: String,
-    val category_by_id: String,
-    val resource_by_id: String,
+    val service_by_id: Any,
+    val category_by_id: Any,
+    val resource_by_id: Any,
     val code: Int,
-    val offer_by_id: String,
+    val offer_by_id: Any,
     val module: String,
     val etag: String,
-    val product_by_id: String
+    val product_by_id: Any
 )
 
 data class Service(
