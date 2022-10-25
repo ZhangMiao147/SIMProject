@@ -5,8 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.zhangmiao.simproject.R
+import com.zhangmiao.simproject.SIMApplication
 import com.zhangmiao.simproject.logic.model.ShoppingGood
 
 class ShoppingAdapter(var shoppingGoods: ArrayList<ShoppingGood>?,val viewModel:SIMOfferViewModel) :
@@ -27,10 +29,17 @@ class ShoppingAdapter(var shoppingGoods: ArrayList<ShoppingGood>?,val viewModel:
     override fun onBindViewHolder(holder: ShoppingViewHolder, position: Int) {
         val shoppingGood: ShoppingGood = shoppingGoods!!.get(position)
         holder.cb_select.isChecked = shoppingGood.select
+        holder.cb_select.setOnCheckedChangeListener { compoundButton, b ->
+            viewModel.changeShoppingGoodSelect(shoppingGood.id,b)
+        }
         holder.tv_shoppingName.text = shoppingGood.name
         holder.tv_price.text = shoppingGood.amount.toString()
         holder.tv_reduce.setOnClickListener {
-            viewModel.reduceShoppingGoodNum(shoppingGood.id)
+            if(shoppingGood.num == 1){
+                Toast.makeText(SIMApplication.context,"Quantity is at least 1 ",Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.reduceShoppingGoodNum(shoppingGood.id)
+            }
         }
         holder.tv_num.text = shoppingGood.num.toString()
         holder.tv_add.setOnClickListener {

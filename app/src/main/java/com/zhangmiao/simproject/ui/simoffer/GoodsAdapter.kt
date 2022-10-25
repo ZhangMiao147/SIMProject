@@ -27,7 +27,7 @@ class GoodsAdapter(
     override fun onBindViewHolder(holder: GoodsViewHolder, position: Int) {
         var good: Good = goodsList[position]
         holder.tv_name.text = good.name
-        holder.tv_priceFinal.text = good.amount_final.toString()
+        holder.tv_priceFinal.text = "₱"+good.amount_final.toString()
         if (good.discount == 1) {
             // 有折扣
             holder.tv_priceInitial.text = good.amount_initial.toString()
@@ -37,7 +37,6 @@ class GoodsAdapter(
             holder.tv_priceInitial.visibility = View.INVISIBLE
         }
         holder.iv_shopping.setOnClickListener {
-            TODO("加入购物车")
             viewModel.addShoppingData(good)
         }
     }

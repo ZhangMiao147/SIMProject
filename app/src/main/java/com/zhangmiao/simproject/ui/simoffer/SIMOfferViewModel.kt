@@ -16,8 +16,8 @@ class SIMOfferViewModel : ViewModel() {
 
     val goodList = ArrayList<Good>()
 
-    val goodLiveData = Transformations.switchMap(this.getLiveData){ offersRequest ->
-        Log.d("SIMOfferViewModel","switchMap getOffers")
+    val goodLiveData = Transformations.switchMap(this.getLiveData) { offersRequest ->
+        Log.d("SIMOfferViewModel", "switchMap getOffers")
         Repository.getOffers(offersRequest.type, offersRequest.operator_name)
     }
 
@@ -33,8 +33,9 @@ class SIMOfferViewModel : ViewModel() {
         var shoppingGoods = shoppingList.value
         val shoppingGood =
             ShoppingGood(good.id, good.name, good.amount_final, 1, true)
+
         val index = shoppingGoods?.indexOf(shoppingGood) ?: -1
-        if (shoppingGoods == null){
+        if (shoppingGoods == null) {
             shoppingGoods = ArrayList<ShoppingGood>()
         }
         if (index != -1) {
@@ -43,20 +44,23 @@ class SIMOfferViewModel : ViewModel() {
         } else {
             shoppingGoods.add(shoppingGood)
         }
+        shoppingList.value = shoppingGoods
     }
 
     fun addShoppingGoodNum(goodId: String) {
         val shoppingGoods = shoppingList.value
         shoppingGoods?.forEach {
-            it.num++
+            if (it.id == goodId) it.num++
         }
+        shoppingList.value = shoppingGoods
     }
 
     fun reduceShoppingGoodNum(goodId: String) {
         val shoppingGoods = shoppingList.value
         shoppingGoods?.forEach {
-            it.num--
+            if (it.id == goodId) it.num--
         }
+        shoppingList.value = shoppingGoods
     }
 
     fun getSelectNum(): Int {
@@ -75,14 +79,23 @@ class SIMOfferViewModel : ViewModel() {
         val shoppingGoods = shoppingList.value
         shoppingGoods?.forEach {
             if (it.select) {
-                totalAmount += it.amount
+                totalAmount += it.amount * it.num
             }
         }
         return totalAmount
     }
 
+    fun changeShoppingGoodSelect(goodId: String,select:Boolean){
+        val shoppingGoods = shoppingList.value
+        shoppingGoods?.forEach {
+            if (it.id == goodId) it.select = select
+        }
+        shoppingList.value = shoppingGoods
+    }
+
     fun clearShoppingGoods() {
         shoppingList.value?.clear()
+        shoppingList.value = ArrayList()
     }
 
     fun selectAllShoppingGoods() {
@@ -90,6 +103,7 @@ class SIMOfferViewModel : ViewModel() {
         shoppingGoods?.forEach {
             it.select = true
         }
+        shoppingList.value = shoppingGoods
     }
 
 

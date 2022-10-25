@@ -1,7 +1,7 @@
 package com.zhangmiao.simproject.ui.simoffer
 
+import android.graphics.Rect
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -50,23 +50,26 @@ class SIMofferActivity : BaseActivity() {
         rv_list.layoutManager = layoutManager
         adapter = GoodsAdapter(viewModel.goodList, viewModel)
         rv_list.adapter = adapter
+        rv_list.addItemDecoration(GoodSpaceItemDecoration(20))
 
-        val shoppingListGroup:Group = findViewById(R.id.activity_sim_offer_shopping_list_group)
 
+        val shoppingListGroup: Group = findViewById(R.id.activity_sim_offer_shopping_list_group)
         val iv_shopping: ImageView = findViewById(R.id.activity_sim_offer_shopping_iv)
         iv_shopping.setOnClickListener {
-            if (shoppingListGroup.visibility != View.VISIBLE){
+            if (shoppingListGroup.visibility != View.VISIBLE) {
                 shoppingListGroup.visibility = View.VISIBLE
+            } else {
+                shoppingListGroup.visibility = View.GONE
             }
         }
-
         tv_selectNum = findViewById(R.id.activity_sim_offer_shopping_select_num_tv)
-
+        tv_selectNum.text = "0"
         tv_totalAmount = findViewById(R.id.activity_sim_offer_shopping_total_amount_tv)
+        tv_totalAmount.text = "₱0"
 
         val tv_checkout: TextView = findViewById(R.id.activity_sim_offer_shopping_checkout_tv)
         tv_checkout.setOnClickListener {
-            Toast.makeText(SIMApplication.context,"结算商品",Toast.LENGTH_SHORT).show()
+            Toast.makeText(SIMApplication.context, "结算商品", Toast.LENGTH_SHORT).show()
         }
 
         val rv_shoppingList: RecyclerView = findViewById(R.id.activity_sim_offer_shopping_list_rv)
@@ -74,7 +77,7 @@ class SIMofferActivity : BaseActivity() {
         shoppingAdapter = ShoppingAdapter(viewModel.shoppingList.value, viewModel)
         rv_shoppingList.adapter = shoppingAdapter
 
-        val tv_clear:TextView = findViewById(R.id.activity_sim_offer_shopping_clear_tv)
+        val tv_clear: TextView = findViewById(R.id.activity_sim_offer_shopping_clear_tv)
         tv_clear.setOnClickListener {
             viewModel.clearShoppingGoods()
         }
@@ -82,9 +85,9 @@ class SIMofferActivity : BaseActivity() {
 
     private fun addObserve() {
         viewModel.goodLiveData.observe(this, androidx.lifecycle.Observer { result ->
-            Log.d(TAG,"addObserve goodLiveData observe result:${result}")
+            Log.d(TAG, "addObserve goodLiveData observe result:${result}")
             val goods = result.getOrNull()
-            Log.d(TAG,"addObserve goodLiveData observe goods:${goods}")
+            Log.d(TAG, "addObserve goodLiveData observe goods:${goods}")
             if (!goods.isNullOrEmpty()) {
                 hideLoading()
                 viewModel.goodList.clear()
@@ -98,10 +101,28 @@ class SIMofferActivity : BaseActivity() {
         })
 
         viewModel.shoppingList.observe(this, Observer {
+            Log.d(TAG, "addObserve shoppingList observe it:${it}")
             tv_selectNum.text = viewModel.getSelectNum().toString()
             tv_totalAmount.text = "₱" + viewModel.getTotalAmount()
             shoppingAdapter.shoppingGoods = viewModel.shoppingList.value
+            shoppingAdapter.notifyDataSetChanged()
         })
+    }
+
+    inner class GoodSpaceItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            val index: Int = parent.indexOfChild(view)
+            if (index % 2 == 0) {
+                // first columns
+                outRect.right = space
+            }
+            outRect.bottom = space
+        }
     }
 
 }
