@@ -25,83 +25,62 @@ class SIMOfferViewModel : ViewModel() {
         getLiveData.value = offersRequest
     }
 
-//    private val getShoppingGoodLiveData = MutableLiveData<String>()
-
-//    val shoppingGoodLiveData = Transformations.switchMap(this.getShoppingGoodLiveData) { value ->
-//        Log.d(TAG, "switchMap shoppingGoodLiveData")
-//        Repository.getShoppingGoodList()
-//    }
-
-    /* ------- 购物车 --------- */
-    val shoppingList = MutableLiveData<ArrayList<ShoppingGood>>()
-
     val shoppingGoodList = ArrayList<ShoppingGood>()
 
-//    fun getShoppingGoodList(){
-//        Log.d(TAG, "getShoppingGoodList")
-//        val shoppingGoodList = Repository.getShoppingGoodList()
-//        Log.d(TAG, "getShoppingGoodList shoppingGoodList：${shoppingGoodList?.value}")
-//        shoppingGoodList?.value?.let {
-//            var shoppingGoodList:ArrayList<ShoppingGood>? = shoppingList?.value
-//            if (shoppingGoodList == null) shoppingGoodList = ArrayList()
-//            it.forEach {
-//                shoppingGoodList.add(it)
-//            }
-//            shoppingList.value = shoppingGoodList
-//        }
-//    }
+    private val getShoppingGood = MutableLiveData<String>()
+
+    val shoppingGoodLiveData = Transformations.switchMap(getShoppingGood) {
+        Log.d(TAG, "shoppingGoodLiveData switchMap it:${it}")
+        Repository.getShoppingGoodList()
+    }
+
+    fun getShooingGoodList() {
+        getShoppingGood.value = System.currentTimeMillis().toString()
+    }
 
 
     fun addShoppingData(good: Good) {
-        var shoppingGoods = shoppingList.value
-        val shoppingGood =
-            ShoppingGood(good.id, good.name, good.amount_final, 1, true)
-
-        val index = shoppingGoods?.indexOf(shoppingGood) ?: -1
-        if (shoppingGoods == null) {
-            shoppingGoods = ArrayList<ShoppingGood>()
+        val shoppingGood = ShoppingGood(good.id, good.name, good.amount_final, 1, true)
+        Log.d(TAG,"addShoppingData shoppingGoodList:${shoppingGoodList}")
+        Log.d(TAG,"addShoppingData shoppingGood:${shoppingGood}")
+        val index = shoppingGoodList.indexOf(shoppingGood)
+        Log.d(TAG,"addShoppingData index:${index}")
+        var update:Boolean = false
+        shoppingGoodList.forEach {
+            if(it.id == good.id){
+                update = true
+                it.num++
+                it.select = true
+                Repository.updateShoppingGood(it)
+            }
         }
-        if (index != -1) {
-            val oldGood = shoppingGoods.get(index)
-            oldGood.num++
-//            Repository.updateShoppingGood(oldGood)
-        } else {
-            shoppingGoods.add(shoppingGood)
-//            Repository.saveShoppingGood(shoppingGood)
+        if (!update){
+            Repository.saveShoppingGood(shoppingGood)
         }
-        shoppingList.value = shoppingGoods
     }
 
     fun addShoppingGoodNum(goodId: String) {
-        val shoppingGoods = shoppingList.value
-        shoppingGoods?.forEach {
+        shoppingGoodList.forEach {
             if (it.id == goodId) {
-                it.num++
-//                Repository.updateShoppingGood(it)
+                val shoppingGood =
+                    ShoppingGood(it.id, it.name, it.amount, it.num+1, it.select)
+                Repository.updateShoppingGood(shoppingGood)
             }
         }
-        shoppingList.value = shoppingGoods
     }
 
     fun reduceShoppingGoodNum(goodId: String) {
-        val shoppingGoods = shoppingList.value
-        shoppingGoods?.forEach {
+        shoppingGoodList.forEach {
             if (it.id == goodId) {
-                it.num--
-//                Repository.updateShoppingGood(it)
+                val shoppingGood =
+                    ShoppingGood(it.id, it.name, it.amount, it.num-1, it.select)
+                Repository.updateShoppingGood(shoppingGood)
             }
         }
-        shoppingList.value = shoppingGoods
     }
 
     fun getSelectNum(): Int {
         var num = 0
-//        val shoppingGoods = shoppingList.value
-//        shoppingGoods?.forEach {
-//            if (it.select) {
-//                num += it.num
-//            }
-//        }
         shoppingGoodList.forEach {
             if (it.select) {
                 num += it.num
@@ -112,12 +91,6 @@ class SIMOfferViewModel : ViewModel() {
 
     fun getTotalAmount(): Int {
         var totalAmount = 0
-//        val shoppingGoods = shoppingList.value
-//        shoppingGoods?.forEach {
-//            if (it.select) {
-//                totalAmount += it.amount * it.num
-//            }
-//        }
         shoppingGoodList.forEach {
             if (it.select) {
                 totalAmount += it.amount * it.num
@@ -127,34 +100,29 @@ class SIMOfferViewModel : ViewModel() {
     }
 
     fun changeShoppingGoodSelect(goodId: String, select: Boolean) {
-        val shoppingGoods = shoppingList.value
-        shoppingGoods?.forEach {
+        shoppingGoodList.forEach {
             if (it.id == goodId) {
-                it.select = select
-//                Repository.updateShoppingGood(it)
+                val shoppingGood =
+                    ShoppingGood(it.id, it.name, it.amount, it.num, select)
+                Repository.updateShoppingGood(shoppingGood)
             }
         }
-        shoppingList.value = shoppingGoods
     }
 
     fun clearShoppingGoods() {
-        shoppingList.value?.clear()
-        shoppingList.value = ArrayList()
-//        Repository.deleteAllShoppingGood()
+        Repository.deleteAllShoppingGood()
     }
 
     fun changeSelectAllShoppingGoods(select: Boolean) {
-        val shoppingGoods = shoppingList.value
-        shoppingGoods?.forEach {
-            it.select = select
-//            Repository.updateShoppingGood(it)
+        shoppingGoodList.forEach {
+            val shoppingGood =
+                ShoppingGood(it.id, it.name, it.amount, it.num, select)
+            Repository.updateShoppingGood(shoppingGood)
         }
-        shoppingList.value = shoppingGoods
     }
 
     fun isSelectAllShoppingGoods(): Boolean {
-        val shoppingGoods = shoppingList.value
-        shoppingGoods?.forEach {
+        shoppingGoodList.forEach {
             if (!it.select) {
                 return false
             }

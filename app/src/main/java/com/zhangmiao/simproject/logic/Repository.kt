@@ -65,10 +65,12 @@ object Repository {
 
     init {
         shoppingGoodDao = ShoppingGoodDatabase.getDatabase(SIMApplication.context).shoppingGoodDao()
+        Log.d(TAG, "init shoppingGoodDao:${shoppingGoodDao}")
     }
 
     fun saveShoppingGood(shoppingGood: ShoppingGood){
         GlobalScope.launch {
+            Log.d(TAG, "saveShoppingGood shoppingGoodDao:${shoppingGoodDao}")
             shoppingGoodDao?.insertShoppingGood(shoppingGood)
         }
     }

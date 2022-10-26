@@ -45,7 +45,7 @@ class SIMOfferFragment : BaseFragment() {
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.fragment_sim_offer, null, false);
         initView(view)
-        if(viewModel.goodList.isNullOrEmpty()){
+        if (viewModel.goodList.isNullOrEmpty()) {
             showLoading()
         }
         return view
@@ -55,7 +55,7 @@ class SIMOfferFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         addObserve()
         viewModel.getGoods(OffersRequest("offers", "globegomo"))
-//        viewModel.getShoppingGoodList()
+        viewModel.getShooingGoodList()
     }
 
     override fun initView(view: View) {
@@ -102,20 +102,20 @@ class SIMOfferFragment : BaseFragment() {
 
         val iv_shopping: ImageView = view.findViewById(R.id.activity_sim_offer_shopping_iv)
         iv_shopping.setOnClickListener {
-            if (viewModel.shoppingList.value.isNullOrEmpty()) {
-                Toast.makeText(context, "No items in cart", Toast.LENGTH_SHORT).show()
-            } else {
-                if (shoppingListGroup.visibility != View.VISIBLE) {
-                    shoppingListGroup.visibility = View.VISIBLE
+            if (shoppingListGroup.visibility != View.VISIBLE) {
+                if (viewModel.shoppingGoodList.isNullOrEmpty()) {
+                    Toast.makeText(context, "No items in cart", Toast.LENGTH_SHORT).show()
                 } else {
-                    shoppingListGroup.visibility = View.GONE
+                    shoppingListGroup.visibility = View.VISIBLE
                 }
+            } else {
+                shoppingListGroup.visibility = View.GONE
             }
         }
         tv_selectNum = view.findViewById(R.id.activity_sim_offer_shopping_select_num_tv)
         tv_selectNum.text = viewModel.getSelectNum().toString()
         tv_totalAmount = view.findViewById(R.id.activity_sim_offer_shopping_total_amount_tv)
-        tv_totalAmount.text = "₱"+viewModel.getTotalAmount()
+        tv_totalAmount.text = "₱" + viewModel.getTotalAmount()
 
         val tv_checkout: TextView = view.findViewById(R.id.activity_sim_offer_shopping_checkout_tv)
         tv_checkout.setOnClickListener {
@@ -157,13 +157,13 @@ class SIMOfferFragment : BaseFragment() {
             }
         })
 
-        viewModel.shoppingList.observe(this, Observer {
-            Log.d(TAG, "addObserve shoppingList observe it:${it}")
+        viewModel.shoppingGoodLiveData.observe(this, Observer {
+            Log.d(TAG, "addObserve shoppingGoodLiveData observe it:${it}")
             viewModel.shoppingGoodList.clear()
             viewModel.shoppingGoodList.addAll(it)
             tv_selectNum.text = viewModel.getSelectNum().toString()
             tv_totalAmount.text = "₱" + viewModel.getTotalAmount()
-            shoppingAdapter.shoppingGoods = viewModel.shoppingList.value
+            shoppingAdapter.shoppingGoods = viewModel.shoppingGoodList
             shoppingAdapter.notifyDataSetChanged()
             cb_selectAll.isChecked = viewModel.isSelectAllShoppingGoods()
         })
