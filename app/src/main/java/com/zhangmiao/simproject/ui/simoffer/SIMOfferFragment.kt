@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -24,11 +25,12 @@ import com.zhangmiao.simproject.logic.model.OffersRequest
 
 class SIMOfferFragment : BaseFragment() {
 
-    private lateinit var adapter: GoodsAdapter
+    private lateinit var goodsAdapter: GoodsAdapter
     private lateinit var rv_list: RecyclerView
     private lateinit var tv_selectNum: TextView
     private lateinit var tv_totalAmount: TextView
     private lateinit var shoppingAdapter: ShoppingAdapter
+    private lateinit var cb_selectAll: CheckBox
 
     val viewModel by lazy {
         ViewModelProvider(this).get(SIMOfferViewModel::class.java)
@@ -38,38 +40,49 @@ class SIMOfferFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        Log.d(TAG, "onCreateView initView")
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.fragment_sim_offer, null, false);
         initView(view)
+        if(viewModel.goodList.isNullOrEmpty()){
+            showLoading()
+        }
         return view
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addObserve()
-        showLoading()
         viewModel.getGoods(OffersRequest("offers", "globegomo"))
     }
 
     override fun initView(view: View) {
         super.initView(view)
         rv_list = view.findViewById(R.id.activity_sim_offer_list_rv)
+        val shoppingListGroup: Group =
+            view.findViewById(R.id.activity_sim_offer_shopping_list_group)
+
         val layoutManager = GridLayoutManager(context, 2)
         rv_list.layoutManager = layoutManager
-        adapter = GoodsAdapter(viewModel.goodList, object : GoodsAdapter.GoodCallback {
+        goodsAdapter = GoodsAdapter(viewModel.goodList, object : GoodsAdapter.GoodCallback {
             override fun addShopping(good: Good) {
                 viewModel.addShoppingData(good)
+                Toast.makeText(context, "${good.name} is added to cart", Toast.LENGTH_SHORT).show()
             }
 
             override fun gotoDetail(good: Good) {
-                val args: Bundle = Bundle()
-                args.putParcelable("good", good)
-                findNavController().navigate(R.id.action_SIMOfferFragment_to_DetailFragment, args)
-
+                if (shoppingListGroup.visibility == View.GONE) {
+                    val args = Bundle()
+                    args.putParcelable("good", good)
+                    findNavController().navigate(
+                        R.id.action_SIMOfferFragment_to_DetailFragment,
+                        args
+                    )
+                }
             }
         })
-        rv_list.adapter = adapter
+        rv_list.adapter = goodsAdapter
         rv_list.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect,
@@ -86,15 +99,16 @@ class SIMOfferFragment : BaseFragment() {
             }
         })
 
-
-        val shoppingListGroup: Group =
-            view.findViewById(R.id.activity_sim_offer_shopping_list_group)
         val iv_shopping: ImageView = view.findViewById(R.id.activity_sim_offer_shopping_iv)
         iv_shopping.setOnClickListener {
-            if (shoppingListGroup.visibility != View.VISIBLE) {
-                shoppingListGroup.visibility = View.VISIBLE
+            if (viewModel.shoppingList.value.isNullOrEmpty()) {
+                Toast.makeText(context, "No items in cart", Toast.LENGTH_SHORT).show()
             } else {
-                shoppingListGroup.visibility = View.GONE
+                if (shoppingListGroup.visibility != View.VISIBLE) {
+                    shoppingListGroup.visibility = View.VISIBLE
+                } else {
+                    shoppingListGroup.visibility = View.GONE
+                }
             }
         }
         tv_selectNum = view.findViewById(R.id.activity_sim_offer_shopping_select_num_tv)
@@ -104,7 +118,7 @@ class SIMOfferFragment : BaseFragment() {
 
         val tv_checkout: TextView = view.findViewById(R.id.activity_sim_offer_shopping_checkout_tv)
         tv_checkout.setOnClickListener {
-            Toast.makeText(SIMApplication.context, "结算商品", Toast.LENGTH_SHORT).show()
+            Toast.makeText(SIMApplication.context, "check", Toast.LENGTH_SHORT).show()
         }
 
         val rv_shoppingList: RecyclerView =
@@ -118,7 +132,12 @@ class SIMOfferFragment : BaseFragment() {
             viewModel.clearShoppingGoods()
         }
 
+        cb_selectAll = view.findViewById(R.id.activity_sim_offer_shopping_select_all_cb)
+        cb_selectAll.setOnClickListener {
+            viewModel.changeSelectAllShoppingGoods(cb_selectAll.isChecked)
+        }
     }
+
 
     private fun addObserve() {
         viewModel.goodLiveData.observe(this, androidx.lifecycle.Observer { result ->
@@ -129,8 +148,8 @@ class SIMOfferFragment : BaseFragment() {
                 hideLoading()
                 viewModel.goodList.clear()
                 viewModel.goodList.addAll(goods)
-                adapter.goodsList = goods
-                adapter.notifyDataSetChanged()
+                goodsAdapter.goodsList = goods
+                goodsAdapter.notifyDataSetChanged()
             } else {
                 hideLoading()
                 showEmptyView()
@@ -143,6 +162,7 @@ class SIMOfferFragment : BaseFragment() {
             tv_totalAmount.text = "₱" + viewModel.getTotalAmount()
             shoppingAdapter.shoppingGoods = viewModel.shoppingList.value
             shoppingAdapter.notifyDataSetChanged()
+            cb_selectAll.isChecked = viewModel.isSelectAllShoppingGoods()
         })
     }
 }

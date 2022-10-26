@@ -48,11 +48,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/shopping_list_bg"
-        app:constraint_referenced_ids="activity_sim_offer_shopping_added_tv,activity_sim_offer_shopping_clear_tv,activity_sim_offer_shopping_list_rv"
+        android:visibility="gone"
+        app:constraint_referenced_ids="activity_sim_offer_shopping_added_tv,activity_sim_offer_shopping_clear_tv,activity_sim_offer_shopping_list_rv,activity_sim_offer_shopping_select_all_cb,activity_sim_offer_shopping_select_all_tv"
         app:layout_constraintBottom_toTopOf="@id/activity_sim_offer_shopping_group"
         app:layout_constraintHeight_percent="0.6"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
@@ -84,11 +84,34 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/activity_sim_offer_shopping_group"
+        app:layout_constraintBottom_toTopOf="@id/activity_sim_offer_shopping_select_all_cb"
         app:layout_constraintHeight_default="spread"
         app:layout_constraintLeft_toLeftOf="@id/activity_sim_offer_shopping_list_group"
         app:layout_constraintTop_toBottomOf="@id/activity_sim_offer_shopping_clear_tv" />
+
+
+    <CheckBox
+        android:id="@+id/activity_sim_offer_shopping_select_all_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="23dp"
+        app:layout_constraintBottom_toBottomOf="@id/activity_sim_offer_shopping_list_group"
+        app:layout_constraintLeft_toLeftOf="@id/activity_sim_offer_shopping_list_group" />
+
+    <TextView
+        android:id="@+id/activity_sim_offer_shopping_select_all_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:text="Select All"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/activity_sim_offer_shopping_list_group"
+        app:layout_constraintLeft_toRightOf="@id/activity_sim_offer_shopping_select_all_cb"
+        app:layout_constraintTop_toTopOf="@id/activity_sim_offer_shopping_select_all_cb" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/activity_sim_offer_shopping_group"
@@ -123,7 +146,7 @@
         android:layout_height="15dp"
         android:background="@drawable/shopping_num_bg"
         android:gravity="center"
-        android:text="2"
+        android:text="0"
         android:textColor="@color/white"
         android:textSize="10sp"
         app:layout_constraintCircle="@id/activity_sim_offer_shopping_iv"
@@ -137,7 +160,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="₱123"
+        android:text="₱0"
         android:textColor="@color/white"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@id/activity_sim_offer_shopping_group"

@@ -29,11 +29,11 @@ class ShoppingAdapter(var shoppingGoods: ArrayList<ShoppingGood>?,val viewModel:
     override fun onBindViewHolder(holder: ShoppingViewHolder, position: Int) {
         val shoppingGood: ShoppingGood = shoppingGoods!!.get(position)
         holder.cb_select.isChecked = shoppingGood.select
-        holder.cb_select.setOnCheckedChangeListener { compoundButton, b ->
-            viewModel.changeShoppingGoodSelect(shoppingGood.id,b)
+        holder.cb_select.setOnClickListener {
+            viewModel.changeShoppingGoodSelect(shoppingGood.id,holder.cb_select.isChecked)
         }
         holder.tv_shoppingName.text = shoppingGood.name
-        holder.tv_price.text = shoppingGood.amount.toString()
+        holder.tv_price.text = "₱"+shoppingGood.amount.toString()
         holder.tv_reduce.setOnClickListener {
             if(shoppingGood.num == 1){
                 Toast.makeText(SIMApplication.context,"Quantity is at least 1 ",Toast.LENGTH_SHORT).show()

@@ -98,12 +98,22 @@ class SIMOfferViewModel : ViewModel() {
         shoppingList.value = ArrayList()
     }
 
-    fun selectAllShoppingGoods() {
+    fun changeSelectAllShoppingGoods(select: Boolean) {
         val shoppingGoods = shoppingList.value
         shoppingGoods?.forEach {
-            it.select = true
+            it.select = select
         }
         shoppingList.value = shoppingGoods
+    }
+
+    fun isSelectAllShoppingGoods():Boolean{
+        val shoppingGoods = shoppingList.value
+        shoppingGoods?.forEach {
+            if(!it.select){
+                return false
+            }
+        }
+        return true
     }
 
 

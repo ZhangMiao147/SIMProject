@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.zhangmiao.simproject.R
 import com.zhangmiao.simproject.common.ui.BaseFragment
 import com.zhangmiao.simproject.logic.model.Good

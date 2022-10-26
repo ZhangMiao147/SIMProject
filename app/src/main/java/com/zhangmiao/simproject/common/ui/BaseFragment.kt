@@ -46,6 +46,7 @@ open class BaseFragment:Fragment() {
 
     protected open fun initView(view:View) {
         pb_loading = view.findViewById(R.id.layout_loading_loading_pb)
+        Log.d(TAG, "initView pb_loading:${pb_loading}")
     }
 
     override fun onStart() {
@@ -83,6 +84,7 @@ open class BaseFragment:Fragment() {
      * 展示 loading
      */
     fun showLoading() {
+        Log.d(TAG, "showLoading pb_loading:${pb_loading}")
         if (pb_loading?.visibility != View.VISIBLE) {
             pb_loading?.visibility = View.VISIBLE
         }
