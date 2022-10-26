@@ -1,14 +1,18 @@
 package com.zhangmiao.simproject.logic
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.google.gson.Gson
-import com.zhangmiao.simproject.logic.model.GetOffersResponse
-import com.zhangmiao.simproject.logic.model.Good
-import com.zhangmiao.simproject.logic.model.Offer
-import com.zhangmiao.simproject.logic.model.OffersRequest
+import com.zhangmiao.simproject.SIMApplication
+import com.zhangmiao.simproject.logic.dao.ShoppingGoodDao
+import com.zhangmiao.simproject.logic.dao.ShoppingGoodDatabase
+import com.zhangmiao.simproject.logic.model.*
 import com.zhangmiao.simproject.logic.network.OffersNetwork
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 object Repository {
@@ -31,7 +35,7 @@ object Repository {
     /**
      * network data switch show data
      */
-    fun switchToGoods(getOffersResponse: GetOffersResponse): ArrayList<Good> {
+    private fun switchToGoods(getOffersResponse: GetOffersResponse): ArrayList<Good> {
         val goods: ArrayList<Good> = ArrayList()
         val gson = Gson()
         val offerById: String = gson.toJson(getOffersResponse.offer_by_id)
@@ -56,4 +60,36 @@ object Repository {
 
         return goods
     }
+
+    private var shoppingGoodDao:ShoppingGoodDao?= null
+
+    init {
+        shoppingGoodDao = ShoppingGoodDatabase.getDatabase(SIMApplication.context).shoppingGoodDao()
+    }
+
+    fun saveShoppingGood(shoppingGood: ShoppingGood){
+        GlobalScope.launch {
+            shoppingGoodDao?.insertShoppingGood(shoppingGood)
+        }
+    }
+    fun updateShoppingGood(shoppingGood: ShoppingGood) {
+        GlobalScope.launch {
+            shoppingGoodDao?.updateShoppingGood(shoppingGood)
+        }
+    }
+    fun getShoppingGoodList(): LiveData<List<ShoppingGood>>? {
+        return shoppingGoodDao?.getShoppingGoodList()
+    }
+
+    fun deleteAllShoppingGood(){
+        GlobalScope.launch {
+            shoppingGoodDao?.deleteAllShoppingGood()
+        }
+    }
+    fun deleteShoppingGood(shoppingGood: ShoppingGood) {
+        GlobalScope.launch {
+            shoppingGoodDao?.deleteShoppingGood(shoppingGood)
+        }
+    }
+
 }

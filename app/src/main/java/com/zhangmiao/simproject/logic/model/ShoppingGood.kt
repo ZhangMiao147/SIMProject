@@ -1,9 +1,14 @@
 package com.zhangmiao.simproject.logic.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class ShoppingGood(
     /**
      * 商品id
      */
+    @PrimaryKey
      val id: String,
     /**
      * 商品名称

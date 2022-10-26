@@ -55,6 +55,7 @@ class SIMOfferFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         addObserve()
         viewModel.getGoods(OffersRequest("offers", "globegomo"))
+//        viewModel.getShoppingGoodList()
     }
 
     override fun initView(view: View) {
@@ -112,9 +113,9 @@ class SIMOfferFragment : BaseFragment() {
             }
         }
         tv_selectNum = view.findViewById(R.id.activity_sim_offer_shopping_select_num_tv)
-        tv_selectNum.text = "0"
+        tv_selectNum.text = viewModel.getSelectNum().toString()
         tv_totalAmount = view.findViewById(R.id.activity_sim_offer_shopping_total_amount_tv)
-        tv_totalAmount.text = "₱0"
+        tv_totalAmount.text = "₱"+viewModel.getTotalAmount()
 
         val tv_checkout: TextView = view.findViewById(R.id.activity_sim_offer_shopping_checkout_tv)
         tv_checkout.setOnClickListener {
@@ -124,7 +125,7 @@ class SIMOfferFragment : BaseFragment() {
         val rv_shoppingList: RecyclerView =
             view.findViewById(R.id.activity_sim_offer_shopping_list_rv)
         rv_shoppingList.layoutManager = LinearLayoutManager(context)
-        shoppingAdapter = ShoppingAdapter(viewModel.shoppingList.value, viewModel)
+        shoppingAdapter = ShoppingAdapter(viewModel.shoppingGoodList, viewModel)
         rv_shoppingList.adapter = shoppingAdapter
 
         val tv_clear: TextView = view.findViewById(R.id.activity_sim_offer_shopping_clear_tv)
@@ -158,6 +159,8 @@ class SIMOfferFragment : BaseFragment() {
 
         viewModel.shoppingList.observe(this, Observer {
             Log.d(TAG, "addObserve shoppingList observe it:${it}")
+            viewModel.shoppingGoodList.clear()
+            viewModel.shoppingGoodList.addAll(it)
             tv_selectNum.text = viewModel.getSelectNum().toString()
             tv_totalAmount.text = "₱" + viewModel.getTotalAmount()
             shoppingAdapter.shoppingGoods = viewModel.shoppingList.value
