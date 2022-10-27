@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="158dp"
+    android:layout_width="153dp"
     android:layout_height="220dp"
     android:background="@drawable/item_good_bg">
 
@@ -24,11 +24,11 @@
 
     <TextView
         android:id="@+id/item_good_name_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="14dp"
+        android:layout_marginRight="20dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="Easy Sim Switch 30 GB"
@@ -43,20 +43,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="18dp"
         android:text="₱123"
         android:textColor="@color/white"
         android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
 
     <TextView
         android:id="@+id/item_good_price_initial_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="5dp"
         android:text="₱299"
         android:textColor="@color/white"
         android:textSize="12sp"
@@ -68,7 +68,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="18dp"
         android:src="@mipmap/good_shopping"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

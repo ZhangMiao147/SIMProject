@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.zhangmiao.simproject.R
 import com.zhangmiao.simproject.SIMApplication
 import com.zhangmiao.simproject.common.ui.BaseFragment
@@ -31,6 +32,7 @@ class SIMOfferFragment : BaseFragment() {
     private lateinit var tv_totalAmount: TextView
     private lateinit var shoppingAdapter: ShoppingAdapter
     private lateinit var cb_selectAll: CheckBox
+    private lateinit var srl_refreshLayout:SwipeRefreshLayout
 
     val viewModel by lazy {
         ViewModelProvider(this).get(SIMOfferViewModel::class.java)
@@ -119,7 +121,12 @@ class SIMOfferFragment : BaseFragment() {
 
         val tv_checkout: TextView = view.findViewById(R.id.activity_sim_offer_shopping_checkout_tv)
         tv_checkout.setOnClickListener {
-            Toast.makeText(SIMApplication.context, "check", Toast.LENGTH_SHORT).show()
+            val selectNum = viewModel.getSelectNum()
+            if (selectNum > 3){
+                Toast.makeText(SIMApplication.context, "Oops! Up to 3 SIMs can be purchased per checkout", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(SIMApplication.context, "Check Finish", Toast.LENGTH_SHORT).show()
+            }
         }
 
         val rv_shoppingList: RecyclerView =
@@ -137,6 +144,14 @@ class SIMOfferFragment : BaseFragment() {
         cb_selectAll.setOnClickListener {
             viewModel.changeSelectAllShoppingGoods(cb_selectAll.isChecked)
         }
+
+        srl_refreshLayout = view.findViewById(R.id.fragment_sim_offer_refresh_layout_srl)
+        srl_refreshLayout.setColorSchemeColors(androidx.appcompat.R.color.material_blue_grey_800)
+        srl_refreshLayout.setProgressBackgroundColorSchemeResource(androidx.constraintlayout.widget.R.color.material_blue_grey_800)
+        srl_refreshLayout.setOnRefreshListener {
+            viewModel.getGoods(OffersRequest("offers", "globegomo"))
+        }
+
     }
 
 
@@ -145,16 +160,17 @@ class SIMOfferFragment : BaseFragment() {
             Log.d(TAG, "addObserve goodLiveData observe result:${result}")
             val goods = result.getOrNull()
             Log.d(TAG, "addObserve goodLiveData observe goods:${goods}")
+            hideLoading()
+            srl_refreshLayout.isRefreshing = false
             if (!goods.isNullOrEmpty()) {
-                hideLoading()
                 viewModel.goodList.clear()
                 viewModel.goodList.addAll(goods)
                 goodsAdapter.goodsList = goods
                 goodsAdapter.notifyDataSetChanged()
             } else {
-                hideLoading()
                 showEmptyView()
             }
+
         })
 
         viewModel.shoppingGoodLiveData.observe(this, Observer {

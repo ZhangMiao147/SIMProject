@@ -81,6 +81,8 @@ data class OfferData(
     val name: String,
     val relationships: List<OfferDataRelationships>,
     val categories: List<String>,
+    var regular_price: String?,
+    var Detail: String?
 )
 
 data class OfferDataAmounts(

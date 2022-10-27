@@ -40,21 +40,21 @@ class SIMOfferViewModel : ViewModel() {
 
 
     fun addShoppingData(good: Good) {
-        val shoppingGood = ShoppingGood(good.id, good.name, good.amount_final, 1, true)
-        Log.d(TAG,"addShoppingData shoppingGoodList:${shoppingGoodList}")
-        Log.d(TAG,"addShoppingData shoppingGood:${shoppingGood}")
+        val shoppingGood = ShoppingGood(good.id, good.name, good.amount_primary, 1, true)
+        Log.d(TAG, "addShoppingData shoppingGoodList:${shoppingGoodList}")
+        Log.d(TAG, "addShoppingData shoppingGood:${shoppingGood}")
         val index = shoppingGoodList.indexOf(shoppingGood)
-        Log.d(TAG,"addShoppingData index:${index}")
-        var update:Boolean = false
+        Log.d(TAG, "addShoppingData index:${index}")
+        var update: Boolean = false
         shoppingGoodList.forEach {
-            if(it.id == good.id){
+            if (it.id == good.id) {
                 update = true
                 it.num++
                 it.select = true
                 Repository.updateShoppingGood(it)
             }
         }
-        if (!update){
+        if (!update) {
             Repository.saveShoppingGood(shoppingGood)
         }
     }
@@ -63,7 +63,7 @@ class SIMOfferViewModel : ViewModel() {
         shoppingGoodList.forEach {
             if (it.id == goodId) {
                 val shoppingGood =
-                    ShoppingGood(it.id, it.name, it.amount, it.num+1, it.select)
+                    ShoppingGood(it.id, it.name, it.amount, it.num + 1, it.select)
                 Repository.updateShoppingGood(shoppingGood)
             }
         }
@@ -73,7 +73,7 @@ class SIMOfferViewModel : ViewModel() {
         shoppingGoodList.forEach {
             if (it.id == goodId) {
                 val shoppingGood =
-                    ShoppingGood(it.id, it.name, it.amount, it.num-1, it.select)
+                    ShoppingGood(it.id, it.name, it.amount, it.num - 1, it.select)
                 Repository.updateShoppingGood(shoppingGood)
             }
         }
