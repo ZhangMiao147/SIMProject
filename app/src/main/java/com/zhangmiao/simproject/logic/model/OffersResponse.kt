@@ -1,7 +1,5 @@
 package com.zhangmiao.simproject.logic.model
 
-import java.util.Objects
-
 data class GetOffersResponse(
     val timestamp: Long,
     val request_id: String,

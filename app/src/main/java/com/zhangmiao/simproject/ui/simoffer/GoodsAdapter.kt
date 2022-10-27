@@ -11,9 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zhangmiao.simproject.R
 import com.zhangmiao.simproject.logic.model.Good
 
-/**
- * 商品列表 adapter
- */
 class GoodsAdapter(
     var goodsList: List<Good> = ArrayList<Good>(),
     val callback: GoodCallback

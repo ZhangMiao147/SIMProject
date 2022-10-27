@@ -7,276 +7,270 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_app_bar_bg"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:background="@color/layout_bg"
+        android:paddingLeft="@dimen/dimen_20"
+        android:paddingRight="@dimen/dimen_20">
 
         <ImageView
-            android:id="@+id/activity_detail_image_iv"
+            android:id="@+id/fragment_detail_image_iv"
             android:layout_width="match_parent"
-            android:layout_height="335dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="@dimen/dimen_335"
+            android:layout_marginTop="@dimen/dimen_20"
             android:background="@drawable/detail_image_bg"
-            android:paddingTop="64dp"
-            android:paddingBottom="64dp"
+            android:paddingTop="@dimen/dimen_64"
+            android:paddingBottom="@dimen/dimen_64"
             android:src="@mipmap/detail_good_img"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/activity_detail_name_tv"
+            android:id="@+id/fragment_detail_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dimen_20"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Easy Sim Switch 30 GB"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="@dimen/text_size_22"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_image_iv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_image_iv" />
 
         <TextView
-            android:id="@+id/activity_detail_initial_amount_tv"
+            android:id="@+id/fragment_detail_initial_amount_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="₱299"
+            android:layout_marginTop="@dimen/dimen_10"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_12"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_name_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_name_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_final_amount_tv"
+            android:id="@+id/fragment_detail_final_amount_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="₱123"
+            android:layout_marginTop="@dimen/dimen_10"
             android:textColor="@color/white"
-            android:textSize="32sp"
+            android:textSize="@dimen/text_size_32"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_initial_amount_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_initial_amount_tv" />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/activity_detail_overview_group"
+            android:id="@+id/fragment_detail_overview_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="activity_detail_overview_title_tv,activity_detail_overview_content_tv" />
+            app:constraint_referenced_ids="fragment_detail_overview_title_tv,fragment_detail_overview_content_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_overview_title_tv"
+            android:id="@+id/fragment_detail_overview_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Product Overview"
+            android:layout_marginTop="@dimen/dimen_40"
+            android:text="@string/product_overview_title"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_18"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_final_amount_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_final_amount_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_overview_content_tv"
+            android:id="@+id/fragment_detail_overview_content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Domestic Data-only lmmortal with Free SIM"
+            android:layout_marginTop="@dimen/dimen_10"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_size_14"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_overview_title_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_overview_title_tv" />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/activity_detail_product_detail_group"
+            android:id="@+id/fragment_detail_product_detail_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="activity_detail_product_detail_title_tv,activity_detail_product_detail_content_tv" />
+            app:constraint_referenced_ids="fragment_detail_product_detail_title_tv,fragment_detail_product_detail_content_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_product_detail_title_tv"
+            android:id="@+id/fragment_detail_product_detail_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Product Details"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:text="@string/product_details_title"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_18"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_overview_content_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_overview_content_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_product_detail_content_tv"
+            android:id="@+id/fragment_detail_product_detail_content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="All in one Mobile App\nUse Data as ‘Mo Creds\nNo Bills. No load required\nNationwide LTE coverage"
+            android:layout_marginTop="@dimen/dimen_10"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_size_14"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_product_detail_title_tv" />
-
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_product_detail_title_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_delivery_detail_title_tv"
+            android:id="@+id/fragment_detail_delivery_detail_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Delivery Details"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:text="@string/delivery_details_title"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_18"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_product_detail_content_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_product_detail_content_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_detail_content_tv"
+            android:id="@+id/fragment_detail_detail_content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="See below for the estimated delivery time based on your location:"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="@string/detail_content"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_size_14"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_delivery_detail_title_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_delivery_detail_title_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_area_title_tv"
+            android:id="@+id/fragment_detail_area_title_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="@dimen/dimen_30"
             android:gravity="center"
-            android:text="Area"
-            android:textColor="#FFD71F"
-            android:textSize="12sp"
+            android:text="@string/area"
+            android:textColor="@color/color_FFD71F"
+            android:textSize="@dimen/text_size_12"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/activity_detail_time_title_tv"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_detail_content_tv" />
+            app:layout_constraintRight_toLeftOf="@id/fragment_detail_time_title_tv"
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_detail_content_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_area_1_tv"
+            android:id="@+id/fragment_detail_area_1_tv"
             android:layout_width="0dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="10dp"
-            android:background="#574D68"
+            android:layout_height="@dimen/dimen_39"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/color_574D68"
             android:gravity="center"
-            android:text="Metro Manila"
+            android:text="@string/metro_manila"
             android:textColor="@color/white"
-            android:textSize="10sp"
+            android:textSize="@dimen/text_size_10"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/activity_detail_time_1_tv"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_area_title_tv" />
+            app:layout_constraintRight_toLeftOf="@id/fragment_detail_time_1_tv"
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_area_title_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_area_2_tv"
+            android:id="@+id/fragment_detail_area_2_tv"
             android:layout_width="0dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="10dp"
-            android:background="#574D68"
+            android:layout_height="@dimen/dimen_39"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/color_574D68"
             android:gravity="center"
-            android:text="Luzon"
+            android:text="@string/luzon"
             android:textColor="@color/white"
-            android:textSize="10sp"
+            android:textSize="@dimen/text_size_10"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/activity_detail_time_2_tv"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_area_1_tv" />
+            app:layout_constraintRight_toLeftOf="@id/fragment_detail_time_2_tv"
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_area_1_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_area_3_tv"
+            android:id="@+id/fragment_detail_area_3_tv"
             android:layout_width="0dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="10dp"
-            android:background="#574D68"
+            android:layout_height="@dimen/dimen_39"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/color_574D68"
             android:gravity="center"
-            android:text="Visayas / Mindanao"
+            android:text="@string/visayas_mindanao"
             android:textColor="@color/white"
-            android:textSize="10sp"
+            android:textSize="@dimen/text_size_10"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/activity_detail_time_3_tv"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_area_2_tv" />
+            app:layout_constraintRight_toLeftOf="@id/fragment_detail_time_3_tv"
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_area_2_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_time_title_tv"
+            android:id="@+id/fragment_detail_time_title_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="9dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginLeft="@dimen/dimen_9"
+            android:layout_marginTop="@dimen/dimen_30"
             android:gravity="center"
-            android:text="Estimated delivery time"
-            android:textColor="#FFD71F"
-            android:textSize="12sp"
+            android:text="@string/estimated_delivery_time"
+            android:textColor="@color/color_FFD71F"
+            android:textSize="@dimen/text_size_12"
             android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/activity_detail_area_title_tv"
+            app:layout_constraintLeft_toRightOf="@id/fragment_detail_area_title_tv"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_detail_content_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_detail_content_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_time_1_tv"
+            android:id="@+id/fragment_detail_time_1_tv"
             android:layout_width="0dp"
-            android:layout_height="39dp"
-            android:layout_marginLeft="9dp"
-            android:layout_marginTop="10dp"
-            android:background="#81798E"
+            android:layout_height="@dimen/dimen_39"
+            android:layout_marginLeft="@dimen/dimen_9"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/color_81798E"
             android:gravity="center"
-            android:text="Metro Manila"
+            android:text="@string/metro_manila_time"
             android:textColor="@color/white"
-            android:textSize="10sp"
-            app:layout_constraintLeft_toRightOf="@id/activity_detail_area_1_tv"
+            android:textSize="@dimen/text_size_10"
+            app:layout_constraintLeft_toRightOf="@id/fragment_detail_area_1_tv"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_time_title_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_time_title_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_time_2_tv"
+            android:id="@+id/fragment_detail_time_2_tv"
             android:layout_width="0dp"
-            android:layout_height="39dp"
-            android:layout_marginLeft="9dp"
-            android:layout_marginTop="10dp"
-            android:background="#81798E"
+            android:layout_height="@dimen/dimen_39"
+            android:layout_marginLeft="@dimen/dimen_9"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/color_81798E"
             android:gravity="center"
-            android:text="Luzon"
+            android:text="@string/luzon_time"
             android:textColor="@color/white"
-            android:textSize="10sp"
-            app:layout_constraintLeft_toRightOf="@id/activity_detail_area_2_tv"
+            android:textSize="@dimen/text_size_10"
+            app:layout_constraintLeft_toRightOf="@id/fragment_detail_area_2_tv"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_time_1_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_time_1_tv" />
 
         <TextView
-            android:id="@+id/activity_detail_time_3_tv"
+            android:id="@+id/fragment_detail_time_3_tv"
             android:layout_width="0dp"
-            android:layout_height="39dp"
-            android:layout_marginLeft="9dp"
-            android:layout_marginTop="10dp"
-            android:background="#81798E"
+            android:layout_height="@dimen/dimen_39"
+            android:layout_marginLeft="@dimen/dimen_9"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/color_81798E"
             android:gravity="center"
-            android:text="Visayas / Mindanao"
+            android:text="@string/visayas_mindanao_time"
             android:textColor="@color/white"
-            android:textSize="10sp"
-            app:layout_constraintLeft_toRightOf="@id/activity_detail_area_3_tv"
+            android:textSize="@dimen/text_size_10"
+            app:layout_constraintLeft_toRightOf="@id/fragment_detail_area_3_tv"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_time_2_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_time_2_tv" />
 
 
         <TextView
-            android:id="@+id/activity_detail_content_tv"
+            android:id="@+id/fragment_detail_content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"
-            android:text="If you are unable to pesronally receive your SIM, please ensure that an authorized representative is available to sign the proof of delivery(POD) on your behalf."
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_30"
+            android:text="@string/detail_tip"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_size_14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detail_area_3_tv" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_detail_area_3_tv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,21 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="122dp">
+    android:paddingLeft="@dimen/dimen_20"
+    android:paddingRight="@dimen/dimen_20"
+    android:layout_height="@dimen/dimen_122">
 
     <CheckBox
         android:id="@+id/item_shopping_good_select_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/item_shopping_good_image_iv"
-        android:layout_width="88dp"
-        android:layout_height="71dp"
+        android:layout_width="@dimen/dimen_88"
+        android:layout_height="@dimen/dimen_71"
         android:src="@mipmap/shopping_good_img"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/item_shopping_good_select_cb"
@@ -26,11 +27,10 @@
         android:id="@+id/item_shopping_good_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="30GB No Expiry"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_20"
         android:textColor="@color/white"
-        android:textSize="13sp"
+        android:textSize="@dimen/text_size_13"
         app:layout_constraintLeft_toRightOf="@id/item_shopping_good_image_iv"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,63 +39,59 @@
         android:id="@+id/item_shopping_good_price_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:text="₱123"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_5"
         android:textColor="@color/white"
-        android:textSize="17sp"
+        android:textSize="@dimen/text_size_17"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@id/item_shopping_good_image_iv"
         app:layout_constraintTop_toBottomOf="@id/item_shopping_good_name_tv" />
 
     <TextView
         android:id="@+id/item_shopping_good_reduce_tv"
-        android:layout_width="40dp"
-        android:layout_height="29dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:background="#9569DB"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_29"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/color_9569DB"
         android:gravity="center"
-        android:text="-"
+        android:text="@string/reduce"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="@dimen/text_size_15"
         app:layout_constraintLeft_toRightOf="@id/item_shopping_good_image_iv"
         app:layout_constraintTop_toBottomOf="@id/item_shopping_good_price_tv" />
 
 
     <TextView
         android:id="@+id/item_shopping_good_num_tv"
-        android:layout_width="40dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="10dp"
-        android:background="#9569DB"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_29"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/color_9569DB"
         android:gravity="center"
-        android:text="1"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="@dimen/text_size_15"
         app:layout_constraintLeft_toRightOf="@id/item_shopping_good_reduce_tv"
         app:layout_constraintTop_toBottomOf="@id/item_shopping_good_price_tv" />
 
 
     <TextView
         android:id="@+id/item_shopping_good_add_tv"
-        android:layout_width="40dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="10dp"
-        android:background="#9569DB"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_29"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/color_9569DB"
         android:gravity="center"
-        android:text="+"
+        android:text="@string/add"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="@dimen/text_size_15"
         app:layout_constraintLeft_toRightOf="@id/item_shopping_good_num_tv"
         app:layout_constraintTop_toBottomOf="@id/item_shopping_good_price_tv" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="#9569DB"
+        android:layout_height="@dimen/dimen_1"
+        android:background="@color/color_9569DB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

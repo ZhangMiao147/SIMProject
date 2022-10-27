@@ -5,35 +5,22 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ShoppingGood(
-    /**
-     * 商品id
-     */
-    @PrimaryKey
-     val id: String,
-    /**
-     * 商品名称
-     */
-     val name: String,
 
-    /**
-     * 商品金额
-     */
+    @PrimaryKey
+    val id: String,
+
+    val name: String,
+
     val amount: Int,
 
-    /**
-     * 商品数量
-     */
     var num: Int,
 
-    /**
-     * 商品是否被选中
-     */
-    var select:Boolean
+    var select: Boolean
 
-    ) {
+) {
 
     override fun equals(other: Any?): Boolean {
-        return if(other is Good){
+        return if (other is Good) {
             other.id.equals(id)
         } else {
             false
@@ -41,6 +28,6 @@ data class ShoppingGood(
     }
 
     override fun hashCode(): Int {
-        return id.hashCode()+name.hashCode()+amount.hashCode()
+        return id.hashCode() + name.hashCode() + amount.hashCode()
     }
 }

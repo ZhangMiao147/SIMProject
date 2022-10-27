@@ -11,14 +11,8 @@ import com.zhangmiao.simproject.R
 import com.zhangmiao.simproject.SIMApplication
 import com.zhangmiao.simproject.logic.model.ShoppingGood
 
-class ShoppingAdapter(var shoppingGoods: ArrayList<ShoppingGood>?,val viewModel:SIMOfferViewModel) :
+class ShoppingAdapter(var shoppingGoods: ArrayList<ShoppingGood> = ArrayList(),val viewModel:SIMOfferViewModel) :
     RecyclerView.Adapter<ShoppingAdapter.ShoppingViewHolder>() {
-
-    init {
-        if (shoppingGoods == null){
-            shoppingGoods = ArrayList<ShoppingGood>()
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingViewHolder {
         return ShoppingViewHolder(
@@ -27,7 +21,7 @@ class ShoppingAdapter(var shoppingGoods: ArrayList<ShoppingGood>?,val viewModel:
     }
 
     override fun onBindViewHolder(holder: ShoppingViewHolder, position: Int) {
-        val shoppingGood: ShoppingGood = shoppingGoods!!.get(position)
+        val shoppingGood: ShoppingGood = shoppingGoods.get(position)
         holder.cb_select.isChecked = shoppingGood.select
         holder.cb_select.setOnClickListener {
             viewModel.changeShoppingGoodSelect(shoppingGood.id,holder.cb_select.isChecked)
@@ -47,9 +41,9 @@ class ShoppingAdapter(var shoppingGoods: ArrayList<ShoppingGood>?,val viewModel:
         }
     }
 
-    override fun getItemCount() = shoppingGoods?.size?:0
+    override fun getItemCount() = shoppingGoods.size
 
-    inner class ShoppingViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ShoppingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cb_select: CheckBox = view.findViewById(R.id.item_shopping_good_select_cb)
         val tv_shoppingName: TextView = view.findViewById(R.id.item_shopping_good_name_tv)
         val tv_price: TextView = view.findViewById(R.id.item_shopping_good_price_tv)

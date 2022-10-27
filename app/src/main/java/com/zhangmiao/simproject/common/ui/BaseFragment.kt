@@ -6,11 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.zhangmiao.simproject.R
 
-open class BaseFragment:Fragment() {
+open class BaseFragment : Fragment() {
 
     val TAG: String? = this::class.simpleName
 
@@ -18,6 +20,8 @@ open class BaseFragment:Fragment() {
      * loading
      */
     private var pb_loading: ProgressBar? = null
+    private var vs_tip: ViewStub? = null
+    private var tv_tip: TextView? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,9 +48,10 @@ open class BaseFragment:Fragment() {
         Log.d(TAG, "onCreate")
     }
 
-    protected open fun initView(view:View) {
+    protected open fun initView(view: View) {
         pb_loading = view.findViewById(R.id.layout_loading_loading_pb)
-        Log.d(TAG, "initView pb_loading:${pb_loading}")
+        vs_tip = view.findViewById(R.id.layout_tip_vs)
+        Log.d(TAG, "initView pb_loading:${pb_loading},vs_tip:${vs_tip}")
     }
 
     override fun onStart() {
@@ -101,30 +106,20 @@ open class BaseFragment:Fragment() {
     }
 
     /**
-     * 展示空数据兜底页
+     * 展示兜底页
      */
-    fun showEmptyView() {
-
+    fun showTipView(message: String) {
+        if (tv_tip == null) {
+            tv_tip = vs_tip?.inflate() as TextView
+        }
+        tv_tip?.visibility = View.VISIBLE
+        tv_tip?.text = message
     }
 
     /**
-     * 隐藏空数据兜底页
+     * 隐藏兜底页
      */
-    fun hideEmptyView() {
-
-    }
-
-    /**
-     * 展示失败兜底页
-     */
-    fun showErrorView(message: String) {
-
-    }
-
-    /**
-     * 隐藏失败兜底页
-     */
-    fun hideErrorView() {
-
+    fun hideTipView() {
+        tv_tip?.visibility = View.GONE
     }
 }

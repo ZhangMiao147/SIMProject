@@ -7,5 +7,24 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="sim_offer">SIM offer</string>
+    <string name="sim_offer">SIM Offer</string>
+    <string name="data_exception_tip">Data exception, please try to pull down and refresh</string>
+    <string name="product_overview_title">Product Overview</string>
+    <string name="product_details_title">Product Details</string>
+    <string name="delivery_details_title">Delivery Details</string>
+    <string name="detail_content">See below for the estimated delivery time based on your location:</string>
+    <string name="area">Area</string>
+    <string name="metro_manila">Metro Manila</string>
+    <string name="luzon">Luzon</string>
+    <string name="visayas_mindanao">Visayas / Mindanao</string>
+    <string name="estimated_delivery_time">Estimated delivery time</string>
+    <string name="metro_manila_time">3 to 5 days</string>
+    <string name="luzon_time">5 to 7 days</string>
+    <string name="visayas_mindanao_time">8 to 12 days</string>
+    <string name="detail_tip">If you are unable to pesronally receive your SIM, please ensure that an authorized representative is available to sign the proof of delivery(POD) on your behalf.</string>
+    <string name="clear_cart">Clear Cart</string>
+    <string name="select_all">Select All</string>
+    <string name="checkout">Checkout</string>
+    <string name="reduce">-</string>
+    <string name="add">+</string>
 </resources>

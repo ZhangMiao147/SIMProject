@@ -4,67 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    <androidx.constraintlayout.helper.widget.Layer-->
-<!--        android:id="@+id/activity_main_app_bar_group"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@color/color_app_bar_bg"-->
-<!--        app:constraint_referenced_ids="activity_main_app_bar_title_tv,activity_main_app_bar_back_iv"-->
-<!--        app:layout_constraintHeight_percent="0.08"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/activity_main_app_bar_title_tv"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="@string/sim_offer"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="26sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/activity_main_app_bar_group"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_main_app_bar_layout_abl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintHeight_percent="0.08"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activity_main_toolbar_tb"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_app_bar_bg" >
+            android:background="@color/layout_bg">
+
             <TextView
                 android:id="@+id/activity_main_toolbar_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/sim_offer"
                 android:gravity="center"
+                android:text="@string/sim_offer"
                 android:textColor="@color/white"
-                android:textSize="26sp"/>
+                android:textSize="@dimen/text_size_26" />
 
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-<!--    <ImageView-->
-<!--        android:id="@+id/activity_main_app_bar_back_iv"-->
-<!--        android:layout_width="18dp"-->
-<!--        android:layout_height="18dp"-->
-<!--        android:layout_marginStart="23dp"-->
-<!--        android:src="@mipmap/back"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/activity_main_app_bar_layout_abl"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <fragment
         android:id="@+id/activity_main_navigation"

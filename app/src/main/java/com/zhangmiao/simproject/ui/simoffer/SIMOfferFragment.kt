@@ -62,9 +62,9 @@ class SIMOfferFragment : BaseFragment() {
 
     override fun initView(view: View) {
         super.initView(view)
-        rv_list = view.findViewById(R.id.activity_sim_offer_list_rv)
+        rv_list = view.findViewById(R.id.fragment_sim_offer_list_rv)
         val shoppingListGroup: Group =
-            view.findViewById(R.id.activity_sim_offer_shopping_list_group)
+            view.findViewById(R.id.fragment_sim_offer_shopping_list_group)
 
         val layoutManager = GridLayoutManager(context, 2)
         rv_list.layoutManager = layoutManager
@@ -102,7 +102,7 @@ class SIMOfferFragment : BaseFragment() {
             }
         })
 
-        val iv_shopping: ImageView = view.findViewById(R.id.activity_sim_offer_shopping_iv)
+        val iv_shopping: ImageView = view.findViewById(R.id.fragment_sim_offer_shopping_iv)
         iv_shopping.setOnClickListener {
             if (shoppingListGroup.visibility != View.VISIBLE) {
                 if (viewModel.shoppingGoodList.isNullOrEmpty()) {
@@ -114,12 +114,12 @@ class SIMOfferFragment : BaseFragment() {
                 shoppingListGroup.visibility = View.GONE
             }
         }
-        tv_selectNum = view.findViewById(R.id.activity_sim_offer_shopping_select_num_tv)
+        tv_selectNum = view.findViewById(R.id.fragment_sim_offer_shopping_select_num_tv)
         tv_selectNum.text = viewModel.getSelectNum().toString()
-        tv_totalAmount = view.findViewById(R.id.activity_sim_offer_shopping_total_amount_tv)
+        tv_totalAmount = view.findViewById(R.id.fragment_sim_offer_shopping_total_amount_tv)
         tv_totalAmount.text = "₱" + viewModel.getTotalAmount()
 
-        val tv_checkout: TextView = view.findViewById(R.id.activity_sim_offer_shopping_checkout_tv)
+        val tv_checkout: TextView = view.findViewById(R.id.fragment_sim_offer_shopping_checkout_tv)
         tv_checkout.setOnClickListener {
             val selectNum = viewModel.getSelectNum()
             if (selectNum > 3){
@@ -130,17 +130,17 @@ class SIMOfferFragment : BaseFragment() {
         }
 
         val rv_shoppingList: RecyclerView =
-            view.findViewById(R.id.activity_sim_offer_shopping_list_rv)
+            view.findViewById(R.id.fragment_sim_offer_shopping_list_rv)
         rv_shoppingList.layoutManager = LinearLayoutManager(context)
         shoppingAdapter = ShoppingAdapter(viewModel.shoppingGoodList, viewModel)
         rv_shoppingList.adapter = shoppingAdapter
 
-        val tv_clear: TextView = view.findViewById(R.id.activity_sim_offer_shopping_clear_tv)
+        val tv_clear: TextView = view.findViewById(R.id.fragment_sim_offer_shopping_clear_tv)
         tv_clear.setOnClickListener {
             viewModel.clearShoppingGoods()
         }
 
-        cb_selectAll = view.findViewById(R.id.activity_sim_offer_shopping_select_all_cb)
+        cb_selectAll = view.findViewById(R.id.fragment_sim_offer_shopping_select_all_cb)
         cb_selectAll.setOnClickListener {
             viewModel.changeSelectAllShoppingGoods(cb_selectAll.isChecked)
         }
@@ -149,6 +149,7 @@ class SIMOfferFragment : BaseFragment() {
         srl_refreshLayout.setColorSchemeColors(androidx.appcompat.R.color.material_blue_grey_800)
         srl_refreshLayout.setProgressBackgroundColorSchemeResource(androidx.constraintlayout.widget.R.color.material_blue_grey_800)
         srl_refreshLayout.setOnRefreshListener {
+            hideTipView()
             viewModel.getGoods(OffersRequest("offers", "globegomo"))
         }
 
@@ -168,7 +169,7 @@ class SIMOfferFragment : BaseFragment() {
                 goodsAdapter.goodsList = goods
                 goodsAdapter.notifyDataSetChanged()
             } else {
-                showEmptyView()
+                showTipView(resources.getString(R.string.data_exception_tip))
             }
 
         })
