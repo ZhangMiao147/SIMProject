@@ -10,8 +10,7 @@ import com.zhangmiao.simproject.logic.model.ShoppingGood
 class SIMOfferViewModel : ViewModel() {
 
     val TAG = SIMOfferViewModel::class.simpleName
-
-    /* ------ 商品列表 ------ */
+    
     private val getLiveData = MutableLiveData<OffersRequest>()
 
     val goodList = ArrayList<Good>()
@@ -41,30 +40,21 @@ class SIMOfferViewModel : ViewModel() {
 
     fun addShoppingData(good: Good) {
         val shoppingGood = ShoppingGood(good.id, good.name, good.amount_primary, 1, true)
-        Log.d(TAG, "addShoppingData shoppingGoodList:${shoppingGoodList}")
-        Log.d(TAG, "addShoppingData shoppingGood:${shoppingGood}")
         val index = shoppingGoodList.indexOf(shoppingGood)
-        Log.d(TAG, "addShoppingData index:${index}")
-        var update: Boolean = false
-        shoppingGoodList.forEach {
-            if (it.id == good.id) {
-                update = true
-                it.num++
-                it.select = true
-                Repository.updateShoppingGood(it)
-            }
-        }
-        if (!update) {
+        if (index == -1) {
             Repository.saveShoppingGood(shoppingGood)
+        } else {
+            val oldShoppingGood = shoppingGoodList.get(index)
+            shoppingGood.num = oldShoppingGood.num + 1
+            Repository.updateShoppingGood(shoppingGood)
         }
     }
 
     fun addShoppingGoodNum(goodId: String) {
         shoppingGoodList.forEach {
             if (it.id == goodId) {
-                val shoppingGood =
-                    ShoppingGood(it.id, it.name, it.amount, it.num + 1, it.select)
-                Repository.updateShoppingGood(shoppingGood)
+                it.num++
+                Repository.updateShoppingGood(it)
             }
         }
     }
@@ -72,9 +62,8 @@ class SIMOfferViewModel : ViewModel() {
     fun reduceShoppingGoodNum(goodId: String) {
         shoppingGoodList.forEach {
             if (it.id == goodId) {
-                val shoppingGood =
-                    ShoppingGood(it.id, it.name, it.amount, it.num - 1, it.select)
-                Repository.updateShoppingGood(shoppingGood)
+                it.num--
+                Repository.updateShoppingGood(it)
             }
         }
     }
@@ -102,9 +91,8 @@ class SIMOfferViewModel : ViewModel() {
     fun changeShoppingGoodSelect(goodId: String, select: Boolean) {
         shoppingGoodList.forEach {
             if (it.id == goodId) {
-                val shoppingGood =
-                    ShoppingGood(it.id, it.name, it.amount, it.num, select)
-                Repository.updateShoppingGood(shoppingGood)
+                it.select = select
+                Repository.updateShoppingGood(it)
             }
         }
     }
@@ -115,9 +103,8 @@ class SIMOfferViewModel : ViewModel() {
 
     fun changeSelectAllShoppingGoods(select: Boolean) {
         shoppingGoodList.forEach {
-            val shoppingGood =
-                ShoppingGood(it.id, it.name, it.amount, it.num, select)
-            Repository.updateShoppingGood(shoppingGood)
+            it.select = select
+            Repository.updateShoppingGood(it)
         }
     }
 

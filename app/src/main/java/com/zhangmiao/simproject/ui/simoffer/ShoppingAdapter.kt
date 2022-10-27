@@ -14,6 +14,8 @@ import com.zhangmiao.simproject.logic.model.ShoppingGood
 class ShoppingAdapter(var shoppingGoods: ArrayList<ShoppingGood> = ArrayList(),val viewModel:SIMOfferViewModel) :
     RecyclerView.Adapter<ShoppingAdapter.ShoppingViewHolder>() {
 
+    private val GOOD_LEAST_NUM = 1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingViewHolder {
         return ShoppingViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_shopping_good, parent, false)
@@ -27,10 +29,11 @@ class ShoppingAdapter(var shoppingGoods: ArrayList<ShoppingGood> = ArrayList(),v
             viewModel.changeShoppingGoodSelect(shoppingGood.id,holder.cb_select.isChecked)
         }
         holder.tv_shoppingName.text = shoppingGood.name
-        holder.tv_price.text = "₱"+shoppingGood.amount.toString()
+        holder.tv_price.text = SIMApplication.context.resources.getString(R.string.price,shoppingGood.amount)
+
         holder.tv_reduce.setOnClickListener {
-            if(shoppingGood.num == 1){
-                Toast.makeText(SIMApplication.context,"Quantity is at least 1 ",Toast.LENGTH_SHORT).show()
+            if(shoppingGood.num == GOOD_LEAST_NUM){
+                Toast.makeText(SIMApplication.context,SIMApplication.context.getString(R.string.shopping_quantity_least),Toast.LENGTH_SHORT).show()
             } else {
                 viewModel.reduceShoppingGoodNum(shoppingGood.id)
             }

@@ -22,7 +22,7 @@ class DetailFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        good = arguments?.getParcelable<Good>("good")
+        good = arguments?.getParcelable<Good>(ARGUMENTS_GOOD)
         Log.d(TAG, "onCreateView good:${good}")
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.fragment_detail, null, false);
@@ -36,14 +36,14 @@ class DetailFragment : BaseFragment() {
         tv_name.text = good?.name ?: ""
 
         val tv_finalPrice: TextView = view.findViewById(R.id.fragment_detail_final_amount_tv)
-        tv_finalPrice.text = "₱" + (good?.amount_primary.toString() ?: "--")
+        tv_finalPrice.text = resources.getString(R.string.price,(good?.amount_primary.toString() ?: "0"))
 
         val tv_initPrice: TextView = view.findViewById(R.id.fragment_detail_initial_amount_tv)
         if (good?.regular_price != -1) {
-            tv_initPrice.text = "₱" + (good?.regular_price.toString() ?: "--")
+            tv_initPrice.text = resources.getString(R.string.price,(good?.regular_price.toString() ?: "0"))
             tv_initPrice.visibility = View.VISIBLE
             tv_initPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
-            tv_finalPrice.setTextColor(Color.parseColor("#FFD71F"))
+            tv_finalPrice.setTextColor(resources.getColor(R.color.color_FFD71F))
         } else {
             tv_initPrice.visibility = View.GONE
             tv_finalPrice.setTextColor(Color.WHITE)
@@ -70,6 +70,10 @@ class DetailFragment : BaseFragment() {
         }
 
 
+    }
+
+    companion object{
+        const val ARGUMENTS_GOOD = "good"
     }
 
 

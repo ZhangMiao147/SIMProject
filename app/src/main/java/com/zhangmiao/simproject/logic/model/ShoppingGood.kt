@@ -20,8 +20,8 @@ data class ShoppingGood(
 ) {
 
     override fun equals(other: Any?): Boolean {
-        return if (other is Good) {
-            other.id.equals(id)
+        return if (other is ShoppingGood) {
+            other.id == id && other.name == name && other.amount == amount
         } else {
             false
         }

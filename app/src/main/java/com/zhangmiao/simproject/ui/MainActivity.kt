@@ -6,8 +6,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -17,7 +15,7 @@ import com.zhangmiao.simproject.R
 
 class MainActivity:AppCompatActivity() {
 
-    val TAG = this::class.simpleName
+    private val TAG = this::class.simpleName
     private lateinit var appBarConfiguration: AppBarConfiguration
 
 
@@ -25,32 +23,23 @@ class MainActivity:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate")
         setContentView(R.layout.activity_main)
-        val tb_toolbar:Toolbar = findViewById(R.id.activity_main_toolbar_tb)
+        val toolbar:Toolbar = findViewById(R.id.activity_main_toolbar_tb)
         val navController = findNavController(R.id.activity_main_navigation)
-        setSupportActionBar(tb_toolbar)
+        setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)//添加默认的返回图标
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        supportActionBar?.setHomeButtonEnabled(true) //设置返回键可用
-        Log.d(TAG, "onCreate")
+        supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        navController.addOnDestinationChangedListener(
-            object:NavController.OnDestinationChangedListener{
-                override fun onDestinationChanged(
-                    controller: NavController,
-                    destination: NavDestination,
-                    arguments: Bundle?
-                ) {
-                    val label = destination.label
-                    ( tb_toolbar[0] as TextView).text = label
-                    Log.d(TAG,"onDestinationChanged controller:${controller},destination:${destination},arguments:${arguments}")
-                }
-            })
-
+        navController.addOnDestinationChangedListener{ controller,destination,arguments ->
+            val label = destination.label
+            ( toolbar[0] as TextView).text = label
+            Log.d(TAG,"onDestinationChanged controller:${controller},destination:${destination},arguments:${arguments}")
+        }
 
     }
 

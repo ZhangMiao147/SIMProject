@@ -5,19 +5,20 @@ import android.os.Parcelable
 
 data class Good(
 
-    var id: String,
+    val id: String,
 
-    var name: String,
+    val name: String,
 
-    var regular_price: Int,
+    val regular_price: Int,
 
-    var amount_primary: Int,
+    val amount_primary: Int,
 
     val description: String,
 
-    var detail: String
+    val detail: String
 
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -42,6 +43,7 @@ data class Good(
     }
 
     companion object CREATOR : Parcelable.Creator<Good> {
+        val REGULAR_PRICE_NO = -1
         override fun createFromParcel(parcel: Parcel): Good {
             return Good(parcel)
         }
@@ -50,5 +52,7 @@ data class Good(
             return arrayOfNulls(size)
         }
     }
+
+
 
 }

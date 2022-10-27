@@ -23,6 +23,7 @@ import com.zhangmiao.simproject.SIMApplication
 import com.zhangmiao.simproject.common.ui.BaseFragment
 import com.zhangmiao.simproject.logic.model.Good
 import com.zhangmiao.simproject.logic.model.OffersRequest
+import com.zhangmiao.simproject.ui.detail.DetailFragment
 
 class SIMOfferFragment : BaseFragment() {
 
@@ -32,7 +33,10 @@ class SIMOfferFragment : BaseFragment() {
     private lateinit var tv_totalAmount: TextView
     private lateinit var shoppingAdapter: ShoppingAdapter
     private lateinit var cb_selectAll: CheckBox
-    private lateinit var srl_refreshLayout:SwipeRefreshLayout
+    private lateinit var srl_refreshLayout: SwipeRefreshLayout
+
+    private val MAX_CART_NUM = 3
+    private val GOOD_LIST_COLUMN_COUNT = 2
 
     val viewModel by lazy {
         ViewModelProvider(this).get(SIMOfferViewModel::class.java)
@@ -43,7 +47,6 @@ class SIMOfferFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(TAG, "onCreateView initView")
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.fragment_sim_offer, null, false);
         initView(view)
@@ -66,18 +69,22 @@ class SIMOfferFragment : BaseFragment() {
         val shoppingListGroup: Group =
             view.findViewById(R.id.fragment_sim_offer_shopping_list_group)
 
-        val layoutManager = GridLayoutManager(context, 2)
+        val layoutManager = GridLayoutManager(context, GOOD_LIST_COLUMN_COUNT)
         rv_list.layoutManager = layoutManager
         goodsAdapter = GoodsAdapter(viewModel.goodList, object : GoodsAdapter.GoodCallback {
             override fun addShopping(good: Good) {
                 viewModel.addShoppingData(good)
-                Toast.makeText(context, "${good.name} is added to cart", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    getString(R.string.good_add_card, good.name),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             override fun gotoDetail(good: Good) {
                 if (shoppingListGroup.visibility == View.GONE) {
                     val args = Bundle()
-                    args.putParcelable("good", good)
+                    args.putParcelable(DetailFragment.ARGUMENTS_GOOD, good)
                     findNavController().navigate(
                         R.id.action_SIMOfferFragment_to_DetailFragment,
                         args
@@ -94,11 +101,11 @@ class SIMOfferFragment : BaseFragment() {
                 state: RecyclerView.State
             ) {
                 val index: Int = parent.indexOfChild(view)
-                if (index % 2 == 0) {
+                if (index % GOOD_LIST_COLUMN_COUNT == 0) {
                     // first columns
-                    outRect.right = 20
+                    outRect.right = resources.getDimensionPixelSize(R.dimen.dimen_20)
                 }
-                outRect.bottom = 20
+                outRect.bottom = resources.getDimensionPixelSize(R.dimen.dimen_20)
             }
         })
 
@@ -106,7 +113,8 @@ class SIMOfferFragment : BaseFragment() {
         iv_shopping.setOnClickListener {
             if (shoppingListGroup.visibility != View.VISIBLE) {
                 if (viewModel.shoppingGoodList.isNullOrEmpty()) {
-                    Toast.makeText(context, "No items in cart", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.cart_no_items), Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     shoppingListGroup.visibility = View.VISIBLE
                 }
@@ -117,15 +125,23 @@ class SIMOfferFragment : BaseFragment() {
         tv_selectNum = view.findViewById(R.id.fragment_sim_offer_shopping_select_num_tv)
         tv_selectNum.text = viewModel.getSelectNum().toString()
         tv_totalAmount = view.findViewById(R.id.fragment_sim_offer_shopping_total_amount_tv)
-        tv_totalAmount.text = "₱" + viewModel.getTotalAmount()
+        tv_totalAmount.text = getString(R.string.price, viewModel.getTotalAmount())
 
         val tv_checkout: TextView = view.findViewById(R.id.fragment_sim_offer_shopping_checkout_tv)
         tv_checkout.setOnClickListener {
             val selectNum = viewModel.getSelectNum()
-            if (selectNum > 3){
-                Toast.makeText(SIMApplication.context, "Oops! Up to 3 SIMs can be purchased per checkout", Toast.LENGTH_SHORT).show()
+            if (selectNum > MAX_CART_NUM) {
+                Toast.makeText(
+                    SIMApplication.context,
+                    getString(R.string.cart_check_tip),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                Toast.makeText(SIMApplication.context, "Check Finish", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    SIMApplication.context,
+                    getString(R.string.check_finish),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -169,7 +185,7 @@ class SIMOfferFragment : BaseFragment() {
                 goodsAdapter.goodsList = goods
                 goodsAdapter.notifyDataSetChanged()
             } else {
-                showTipView(resources.getString(R.string.data_exception_tip))
+                showTipView(getString(R.string.data_exception_tip))
             }
 
         })
@@ -179,7 +195,7 @@ class SIMOfferFragment : BaseFragment() {
             viewModel.shoppingGoodList.clear()
             viewModel.shoppingGoodList.addAll(it)
             tv_selectNum.text = viewModel.getSelectNum().toString()
-            tv_totalAmount.text = "₱" + viewModel.getTotalAmount()
+            tv_totalAmount.text = getString(R.string.price, viewModel.getTotalAmount())
             shoppingAdapter.shoppingGoods = viewModel.shoppingGoodList
             shoppingAdapter.notifyDataSetChanged()
             cb_selectAll.isChecked = viewModel.isSelectAllShoppingGoods()

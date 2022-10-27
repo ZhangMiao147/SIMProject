@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.zhangmiao.simproject.R
+import com.zhangmiao.simproject.SIMApplication
 import com.zhangmiao.simproject.logic.model.Good
+import com.zhangmiao.simproject.logic.model.Good.CREATOR.REGULAR_PRICE_NO
 
 class GoodsAdapter(
     var goodsList: List<Good> = ArrayList<Good>(),
@@ -25,16 +28,17 @@ class GoodsAdapter(
     override fun onBindViewHolder(holder: GoodsViewHolder, position: Int) {
         var good: Good = goodsList[position]
         holder.tv_name.text = good.name
-        holder.tv_priceFinal.text = "₱" + good.amount_primary
-        if (good.regular_price == -1) {
+        holder.tv_priceFinal.text = SIMApplication.context.resources.getString(R.string.price,good.amount_primary)
+
+        if (good.regular_price == REGULAR_PRICE_NO) {
             holder.tv_priceFinal.setTextColor(Color.WHITE)
             holder.tv_priceInitial.visibility = View.INVISIBLE
         } else {
-            holder.tv_priceFinal.setTextColor(Color.parseColor("#FFD71F"))
+
+            holder.tv_priceFinal.setTextColor(ContextCompat.getColor(SIMApplication.context,R.color.color_FFD71F))
             holder.tv_priceInitial.visibility = View.VISIBLE
-            holder.tv_priceInitial.paint.flags =
-                Paint.STRIKE_THRU_TEXT_FLAG
-            holder.tv_priceInitial.text = "₱" + good.regular_price
+            holder.tv_priceInitial.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
+            holder.tv_priceInitial.text = SIMApplication.context.resources.getString(R.string.price,good.regular_price)
         }
         holder.iv_shopping.setOnClickListener {
             callback.addShopping(good)

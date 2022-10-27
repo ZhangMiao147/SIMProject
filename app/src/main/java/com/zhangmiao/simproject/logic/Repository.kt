@@ -17,7 +17,7 @@ import org.json.JSONObject
 
 object Repository {
 
-    val TAG = "Repository"
+    private val TAG = "Repository"
 
     fun getOffers(type: String, operator_name: String) = liveData(Dispatchers.IO) {
         val result = try {
@@ -46,7 +46,7 @@ object Repository {
                 val offerObject = offerByIdObject.getJSONObject(it)
                 val offer: Offer = gson.fromJson(offerObject.toString(), Offer::class.java)
                 val regularPrice = offer.data.regular_price
-                var goodRegularPrice = -1
+                var goodRegularPrice = Good.REGULAR_PRICE_NO
                 if (!regularPrice.isNullOrEmpty()) {
                     goodRegularPrice = regularPrice.toInt()
                 }

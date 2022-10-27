@@ -14,7 +14,7 @@ import com.zhangmiao.simproject.R
 
 open class BaseFragment : Fragment() {
 
-    val TAG: String? = this::class.simpleName
+    protected val TAG: String? = this::class.simpleName
 
     /**
      * loading
