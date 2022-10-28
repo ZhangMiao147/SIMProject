@@ -11,19 +11,22 @@ import com.zhangmiao.simproject.logic.model.CartGoods
 @Dao
 interface CartGoodsDao {
 
- @Insert
- fun insertCartGoods(cartGoods: CartGoods):Long
+    @Insert
+    fun insertCartGoods(cartGoods: CartGoods): Long
 
- @Update
- fun updateCartGoods(cartGoods: CartGoods)
+    @Update
+    fun updateCartGoods(cartGoods: CartGoods)
 
- @Query("select * from CartGoods")
- fun getCartGoodsList():LiveData<List<CartGoods>>
+    @Query("select * from CartGoods")
+    fun getCartGoodsList(): LiveData<List<CartGoods>>
 
- @Delete
- fun deleteCartGoods(cartGoods: CartGoods)
+    @Delete
+    fun deleteCartGoods(cartGoods: CartGoods)
 
- @Query("delete from CartGoods")
- fun deleteAllCartGoods()
+    @Query("delete from CartGoods where `select`=:select")
+    fun deleteCartGoods(select: Boolean = true)
+
+    @Query("delete from CartGoods")
+    fun deleteAllCartGoods()
 
 }

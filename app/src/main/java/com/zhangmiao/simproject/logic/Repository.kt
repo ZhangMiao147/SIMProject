@@ -97,6 +97,12 @@ object Repository {
         }
     }
 
+    fun deleteCartSelectGoods() {
+        GlobalScope.launch {
+            cartGoodDao?.deleteCartGoods()
+        }
+    }
+
     fun deleteCartGoods(cartGoods: CartGoods) {
         GlobalScope.launch {
             cartGoodDao?.deleteCartGoods(cartGoods)

@@ -10,7 +10,7 @@ import com.zhangmiao.simproject.logic.model.OffersRequest
 class SIMOfferViewModel : ViewModel() {
 
     val TAG = SIMOfferViewModel::class.simpleName
-    
+
     private val getLiveData = MutableLiveData<OffersRequest>()
 
     val goodsList = ArrayList<Goods>()
@@ -99,6 +99,10 @@ class SIMOfferViewModel : ViewModel() {
 
     fun clearCartGoods() {
         Repository.deleteAllCartGoods()
+    }
+
+    fun clearCartSelectGoods() {
+        Repository.deleteCartSelectGoods()
     }
 
     fun changeSelectAllCartGoods(select: Boolean) {

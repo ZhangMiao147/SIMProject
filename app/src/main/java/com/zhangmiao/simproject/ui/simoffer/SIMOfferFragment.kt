@@ -136,6 +136,7 @@ class SIMOfferFragment : BaseFragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                viewModel.clearCartSelectGoods()
                 Toast.makeText(
                     context,
                     getString(R.string.check_finish),
