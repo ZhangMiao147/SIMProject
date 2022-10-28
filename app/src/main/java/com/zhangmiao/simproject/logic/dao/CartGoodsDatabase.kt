@@ -4,29 +4,26 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.zhangmiao.simproject.logic.model.ShoppingGood
+import com.zhangmiao.simproject.logic.model.CartGoods
 
-@Database(version = 1, entities = [ShoppingGood::class])
-abstract class ShoppingGoodDatabase : RoomDatabase() {
+@Database(version = 1, entities = [CartGoods::class])
+abstract class CartGoodsDatabase : RoomDatabase() {
 
-
-
-    abstract fun shoppingGoodDao(): ShoppingGoodDao
-
+    abstract fun cartGoodsDao(): CartGoodsDao
 
     companion object {
-        private var instance: ShoppingGoodDatabase? = null
-        val TABLE_NAME = "shopping_good_database"
+        private var instance: CartGoodsDatabase? = null
+        val TABLE_NAME = "cart_goods_database"
 
         @Synchronized
-        fun getDatabase(context: Context): ShoppingGoodDatabase {
+        fun getDatabase(context: Context): CartGoodsDatabase {
             instance?.let {
                 return it
             }
 
             return Room.databaseBuilder(
                 context.applicationContext,
-                ShoppingGoodDatabase::class.java,
+                CartGoodsDatabase::class.java,
                 TABLE_NAME
             )
                 .build().apply {

@@ -3,7 +3,7 @@ package com.zhangmiao.simproject.logic.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Good(
+data class Goods(
 
     val id: String,
 
@@ -42,17 +42,16 @@ data class Good(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Good> {
-        val REGULAR_PRICE_NO = -1
-        override fun createFromParcel(parcel: Parcel): Good {
-            return Good(parcel)
+    companion object CREATOR : Parcelable.Creator<Goods> {
+        const val REGULAR_PRICE_NO = -1
+        override fun createFromParcel(parcel: Parcel): Goods {
+            return Goods(parcel)
         }
 
-        override fun newArray(size: Int): Array<Good?> {
+        override fun newArray(size: Int): Array<Goods?> {
             return arrayOfNulls(size)
         }
     }
-
 
 
 }

@@ -3,9 +3,9 @@ package com.zhangmiao.simproject.ui.simoffer
 import android.util.Log
 import androidx.lifecycle.*
 import com.zhangmiao.simproject.logic.Repository
-import com.zhangmiao.simproject.logic.model.Good
+import com.zhangmiao.simproject.logic.model.CartGoods
+import com.zhangmiao.simproject.logic.model.Goods
 import com.zhangmiao.simproject.logic.model.OffersRequest
-import com.zhangmiao.simproject.logic.model.ShoppingGood
 
 class SIMOfferViewModel : ViewModel() {
 
@@ -13,9 +13,9 @@ class SIMOfferViewModel : ViewModel() {
     
     private val getLiveData = MutableLiveData<OffersRequest>()
 
-    val goodList = ArrayList<Good>()
+    val goodsList = ArrayList<Goods>()
 
-    val goodLiveData = Transformations.switchMap(this.getLiveData) { offersRequest ->
+    val goodsLiveData = Transformations.switchMap(this.getLiveData) { offersRequest ->
         Log.d(TAG, "switchMap getOffers")
         Repository.getOffers(offersRequest.type, offersRequest.operator_name)
     }
@@ -24,53 +24,53 @@ class SIMOfferViewModel : ViewModel() {
         getLiveData.value = offersRequest
     }
 
-    val shoppingGoodList = ArrayList<ShoppingGood>()
+    val cartGoodsList = ArrayList<CartGoods>()
 
-    private val getShoppingGood = MutableLiveData<String>()
+    private val getCartGoods = MutableLiveData<String>()
 
-    val shoppingGoodLiveData = Transformations.switchMap(getShoppingGood) {
-        Log.d(TAG, "shoppingGoodLiveData switchMap it:${it}")
-        Repository.getShoppingGoodList()
+    val cartGoodsLiveData = Transformations.switchMap(getCartGoods) {
+        Log.d(TAG, "cartGoodsLiveData switchMap it:${it}")
+        Repository.getCartGoodsList()
     }
 
-    fun getShooingGoodList() {
-        getShoppingGood.value = System.currentTimeMillis().toString()
+    fun getCartGoodsList() {
+        getCartGoods.value = System.currentTimeMillis().toString()
     }
 
 
-    fun addShoppingData(good: Good) {
-        val shoppingGood = ShoppingGood(good.id, good.name, good.amount_primary, 1, true)
-        val index = shoppingGoodList.indexOf(shoppingGood)
+    fun addCartGoodsData(good: Goods) {
+        val cartGoods = CartGoods(good.id, good.name, good.amount_primary, 1, true)
+        val index = cartGoodsList.indexOf(cartGoods)
         if (index == -1) {
-            Repository.saveShoppingGood(shoppingGood)
+            Repository.saveCartGoods(cartGoods)
         } else {
-            val oldShoppingGood = shoppingGoodList.get(index)
-            shoppingGood.num = oldShoppingGood.num + 1
-            Repository.updateShoppingGood(shoppingGood)
+            val oldCartGoods = cartGoodsList.get(index)
+            cartGoods.num = oldCartGoods.num + 1
+            Repository.updateCartGoods(cartGoods)
         }
     }
 
-    fun addShoppingGoodNum(goodId: String) {
-        shoppingGoodList.forEach {
+    fun addCartGoodsNum(goodId: String) {
+        cartGoodsList.forEach {
             if (it.id == goodId) {
                 it.num++
-                Repository.updateShoppingGood(it)
+                Repository.updateCartGoods(it)
             }
         }
     }
 
-    fun reduceShoppingGoodNum(goodId: String) {
-        shoppingGoodList.forEach {
+    fun reduceCartGoodsNum(goodId: String) {
+        cartGoodsList.forEach {
             if (it.id == goodId) {
                 it.num--
-                Repository.updateShoppingGood(it)
+                Repository.updateCartGoods(it)
             }
         }
     }
 
-    fun getSelectNum(): Int {
+    fun getCartSelectNum(): Int {
         var num = 0
-        shoppingGoodList.forEach {
+        cartGoodsList.forEach {
             if (it.select) {
                 num += it.num
             }
@@ -78,9 +78,9 @@ class SIMOfferViewModel : ViewModel() {
         return num
     }
 
-    fun getTotalAmount(): Int {
+    fun getCartTotalAmount(): Int {
         var totalAmount = 0
-        shoppingGoodList.forEach {
+        cartGoodsList.forEach {
             if (it.select) {
                 totalAmount += it.amount * it.num
             }
@@ -88,28 +88,28 @@ class SIMOfferViewModel : ViewModel() {
         return totalAmount
     }
 
-    fun changeShoppingGoodSelect(goodId: String, select: Boolean) {
-        shoppingGoodList.forEach {
+    fun changeCartGoodsSelect(goodId: String, select: Boolean) {
+        cartGoodsList.forEach {
             if (it.id == goodId) {
                 it.select = select
-                Repository.updateShoppingGood(it)
+                Repository.updateCartGoods(it)
             }
         }
     }
 
-    fun clearShoppingGoods() {
-        Repository.deleteAllShoppingGood()
+    fun clearCartGoods() {
+        Repository.deleteAllCartGoods()
     }
 
-    fun changeSelectAllShoppingGoods(select: Boolean) {
-        shoppingGoodList.forEach {
+    fun changeSelectAllCartGoods(select: Boolean) {
+        cartGoodsList.forEach {
             it.select = select
-            Repository.updateShoppingGood(it)
+            Repository.updateCartGoods(it)
         }
     }
 
-    fun isSelectAllShoppingGoods(): Boolean {
-        shoppingGoodList.forEach {
+    fun isSelectAllCartGoods(): Boolean {
+        cartGoodsList.forEach {
             if (!it.select) {
                 return false
             }

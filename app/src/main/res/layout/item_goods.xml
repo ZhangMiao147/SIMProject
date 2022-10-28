@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/dimen_153"
     android:layout_height="@dimen/dimen_220"
-    android:background="@drawable/item_good_bg">
+    android:background="@drawable/item_goods_bg">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/item_good_guide_line_gl"
+        android:id="@+id/item_goods_guide_line_gl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -15,15 +15,15 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/item_good_image_bg"
-        android:src="@mipmap/shopping_good_img"
-        app:layout_constraintBottom_toTopOf="@id/item_good_guide_line_gl"
+        android:background="@drawable/item_goods_image_bg"
+        android:src="@mipmap/cart_goods_img"
+        app:layout_constraintBottom_toTopOf="@id/item_goods_guide_line_gl"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/item_good_name_tv"
+        android:id="@+id/item_goods_name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_20"
@@ -35,10 +35,10 @@
         android:textSize="@dimen/text_size_14"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_good_guide_line_gl" />
+        app:layout_constraintTop_toBottomOf="@id/item_goods_guide_line_gl" />
 
     <TextView
-        android:id="@+id/item_good_price_final_tv"
+        android:id="@+id/item_goods_amount_primary_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_20"
@@ -51,22 +51,22 @@
 
 
     <TextView
-        android:id="@+id/item_good_price_initial_tv"
+        android:id="@+id/item_goods_regular_price_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_20"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_12"
-        app:layout_constraintBottom_toTopOf="@id/item_good_price_final_tv"
+        app:layout_constraintBottom_toTopOf="@id/item_goods_amount_primary_tv"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <ImageView
-        android:id="@+id/item_good_shopping_iv"
+        android:id="@+id/item_goods_add_cart_iv"
         android:layout_width="@dimen/dimen_30"
         android:layout_height="@dimen/dimen_30"
         android:layout_marginRight="@dimen/dimen_20"
         android:layout_marginBottom="@dimen/dimen_18"
-        android:src="@mipmap/good_shopping"
+        android:src="@mipmap/cart_goods"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

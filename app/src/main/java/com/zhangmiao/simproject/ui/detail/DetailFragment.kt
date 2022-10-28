@@ -11,19 +11,19 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import com.zhangmiao.simproject.R
 import com.zhangmiao.simproject.common.ui.BaseFragment
-import com.zhangmiao.simproject.logic.model.Good
+import com.zhangmiao.simproject.logic.model.Goods
 
 class DetailFragment : BaseFragment() {
 
-    private var good: Good? = null
+    private var goods: Goods? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        good = arguments?.getParcelable<Good>(ARGUMENTS_GOOD)
-        Log.d(TAG, "onCreateView good:${good}")
+    ): View {
+        goods = arguments?.getParcelable<Goods>(ARGUMENTS_GOODS)
+        Log.d(TAG, "onCreateView goods:${goods}")
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.fragment_detail, null, false);
         initView(view)
@@ -33,47 +33,46 @@ class DetailFragment : BaseFragment() {
     override fun initView(view: View) {
         super.initView(view)
         val tv_name: TextView = view.findViewById(R.id.fragment_detail_name_tv)
-        tv_name.text = good?.name ?: ""
+        tv_name.text = goods?.name ?: ""
 
-        val tv_finalPrice: TextView = view.findViewById(R.id.fragment_detail_final_amount_tv)
-        tv_finalPrice.text = resources.getString(R.string.price,(good?.amount_primary.toString() ?: "0"))
+        val tv_amountPrimary: TextView = view.findViewById(R.id.fragment_detail_amount_primary_tv)
+        tv_amountPrimary.text = resources.getString(R.string.price,(goods?.amount_primary ?: 0))
 
-        val tv_initPrice: TextView = view.findViewById(R.id.fragment_detail_initial_amount_tv)
-        if (good?.regular_price != -1) {
-            tv_initPrice.text = resources.getString(R.string.price,(good?.regular_price.toString() ?: "0"))
-            tv_initPrice.visibility = View.VISIBLE
-            tv_initPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
-            tv_finalPrice.setTextColor(resources.getColor(R.color.color_FFD71F))
+        val tv_regularPrice: TextView = view.findViewById(R.id.fragment_detail_regular_price_tv)
+        if (goods?.regular_price != Goods.REGULAR_PRICE_NO) {
+            tv_regularPrice.text = resources.getString(R.string.price,(goods?.regular_price ?: 0))
+            tv_regularPrice.visibility = View.VISIBLE
+            tv_regularPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
+            tv_amountPrimary.setTextColor(resources.getColor(R.color.color_FFD71F))
         } else {
-            tv_initPrice.visibility = View.GONE
-            tv_finalPrice.setTextColor(Color.WHITE)
+            tv_regularPrice.visibility = View.GONE
+            tv_amountPrimary.setTextColor(Color.WHITE)
         }
 
         val group_overview: Group = view.findViewById(R.id.fragment_detail_overview_group)
-        if (good?.description.isNullOrEmpty()) {
+        if (goods?.description.isNullOrEmpty()) {
             group_overview.visibility = View.GONE
         } else {
             group_overview.visibility = View.VISIBLE
             val tv_overviewContent: TextView =
                 view.findViewById(R.id.fragment_detail_overview_content_tv)
-            tv_overviewContent.text = good?.description
+            tv_overviewContent.text = goods?.description
         }
 
         val group_detail: Group = view.findViewById(R.id.fragment_detail_product_detail_group)
-        if (good?.detail.isNullOrEmpty()) {
+        if (goods?.detail.isNullOrEmpty()) {
             group_detail.visibility = View.GONE
         } else {
             group_detail.visibility = View.VISIBLE
             val tv_productDetailContent: TextView =
                 view.findViewById(R.id.fragment_detail_delivery_detail_title_tv)
-            tv_productDetailContent.text = good?.detail
+            tv_productDetailContent.text = goods?.detail
         }
-
 
     }
 
     companion object{
-        const val ARGUMENTS_GOOD = "good"
+        const val ARGUMENTS_GOODS = "goods"
     }
 
 

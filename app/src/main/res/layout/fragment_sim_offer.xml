@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/dimen_20"
         android:layout_marginRight="@dimen/dimen_20"
-        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_shopping_group"
+        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_cart_group"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_shopping_group"
+        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_cart_group"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,26 +36,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout="@layout/layout_tip"
-        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_shopping_group"
+        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_cart_group"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/fragment_sim_offer_shopping_list_group"
+        android:id="@+id/fragment_sim_offer_cart_list_group"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/shopping_list_bg"
+        android:background="@drawable/cart_list_bg"
         android:visibility="gone"
-        app:constraint_referenced_ids="fragment_sim_offer_shopping_added_tv,fragment_sim_offer_shopping_clear_tv,fragment_sim_offer_shopping_list_rv,fragment_sim_offer_shopping_select_all_cb,fragment_sim_offer_shopping_select_all_tv"
-        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_shopping_group"
+        app:constraint_referenced_ids="fragment_sim_offer_cart_added_tv,fragment_sim_offer_cart_clear_tv,fragment_sim_offer_cart_list_rv,fragment_sim_offer_cart_select_all_cb,fragment_sim_offer_cart_select_all_tv"
+        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_cart_group"
         app:layout_constraintHeight_percent="0.6"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/fragment_sim_offer_shopping_added_tv"
+        android:id="@+id/fragment_sim_offer_cart_added_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
@@ -63,11 +63,11 @@
         android:text="Added"
         android:textColor="@color/white"
         android:textSize="22sp"
-        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_shopping_list_group"
-        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_shopping_list_group" />
+        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_cart_list_group"
+        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_cart_list_group" />
 
     <TextView
-        android:id="@+id/fragment_sim_offer_shopping_clear_tv"
+        android:id="@+id/fragment_sim_offer_cart_clear_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_42"
@@ -75,86 +75,86 @@
         android:text="@string/clear_cart"
         android:textColor="@color/color_93E9BE"
         android:textSize="@dimen/text_size_18"
-        app:layout_constraintRight_toRightOf="@id/fragment_sim_offer_shopping_list_group"
-        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_shopping_list_group" />
+        app:layout_constraintRight_toRightOf="@id/fragment_sim_offer_cart_list_group"
+        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_cart_list_group" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_sim_offer_shopping_list_rv"
+        android:id="@+id/fragment_sim_offer_cart_list_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginBottom="@dimen/dimen_20"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_shopping_select_all_cb"
+        app:layout_constraintBottom_toTopOf="@id/fragment_sim_offer_cart_select_all_cb"
         app:layout_constraintHeight_default="spread"
-        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_shopping_list_group"
-        app:layout_constraintTop_toBottomOf="@id/fragment_sim_offer_shopping_clear_tv" />
+        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_cart_list_group"
+        app:layout_constraintTop_toBottomOf="@id/fragment_sim_offer_cart_clear_tv" />
 
 
     <CheckBox
-        android:id="@+id/fragment_sim_offer_shopping_select_all_cb"
+        android:id="@+id/fragment_sim_offer_cart_select_all_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_20"
         android:layout_marginBottom="@dimen/dimen_23"
-        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_shopping_list_group"
-        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_shopping_list_group" />
+        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_cart_list_group"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_cart_list_group" />
 
     <TextView
-        android:id="@+id/fragment_sim_offer_shopping_select_all_tv"
+        android:id="@+id/fragment_sim_offer_cart_select_all_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_23"
         android:text="@string/select_all"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_14"
-        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_shopping_list_group"
-        app:layout_constraintLeft_toRightOf="@id/fragment_sim_offer_shopping_select_all_cb"
-        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_shopping_select_all_cb" />
+        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_cart_list_group"
+        app:layout_constraintLeft_toRightOf="@id/fragment_sim_offer_cart_select_all_cb"
+        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_cart_select_all_cb" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/fragment_sim_offer_shopping_group"
+        android:id="@+id/fragment_sim_offer_cart_group"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/dimen_20"
         android:layout_marginRight="@dimen/dimen_20"
         android:layout_marginBottom="@dimen/dimen_40"
-        android:background="@drawable/shopping_bg"
-        app:constraint_referenced_ids="fragment_sim_offer_shopping_iv,fragment_sim_offer_shopping_select_num_tv,fragment_sim_offer_shopping_total_amount_tv,fragment_sim_offer_shopping_checkout_tv"
+        android:background="@drawable/cart_bg"
+        app:constraint_referenced_ids="fragment_sim_offer_cart_iv,fragment_sim_offer_cart_select_num_tv,fragment_sim_offer_cart_total_amount_tv,fragment_sim_offer_cart_checkout_tv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
-        android:id="@+id/fragment_sim_offer_shopping_iv"
+        android:id="@+id/fragment_sim_offer_cart_iv"
         android:layout_width="@dimen/dimen_46"
         android:layout_height="@dimen/dimen_46"
         android:layout_marginLeft="@dimen/dimen_13"
-        android:background="@drawable/shopping_image_bg"
+        android:background="@drawable/cart_image_bg"
         android:padding="@dimen/dimen_11"
-        android:src="@mipmap/shopping"
-        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_shopping_group"
-        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_shopping_group"
-        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_shopping_group" />
+        android:src="@mipmap/cart"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_cart_group"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_cart_group"
+        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_cart_group" />
 
     <TextView
-        android:id="@+id/fragment_sim_offer_shopping_select_num_tv"
+        android:id="@+id/fragment_sim_offer_cart_select_num_tv"
         android:layout_width="@dimen/dimen_15"
         android:layout_height="@dimen/dimen_15"
-        android:background="@drawable/shopping_num_bg"
+        android:background="@drawable/cart_num_bg"
         android:gravity="center"
         android:text="0"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_10"
-        app:layout_constraintCircle="@id/fragment_sim_offer_shopping_iv"
+        app:layout_constraintCircle="@id/fragment_sim_offer_cart_iv"
         app:layout_constraintCircleAngle="45"
         app:layout_constraintCircleRadius="@dimen/dimen_28"
-        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_shopping_group"
-        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_shopping_group" />
+        app:layout_constraintLeft_toLeftOf="@id/fragment_sim_offer_cart_group"
+        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_cart_group" />
 
     <TextView
-        android:id="@+id/fragment_sim_offer_shopping_total_amount_tv"
+        android:id="@+id/fragment_sim_offer_cart_total_amount_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_10"
@@ -162,23 +162,23 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_22"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_shopping_group"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_cart_group"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/fragment_sim_offer_shopping_iv"
-        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_shopping_group" />
+        app:layout_constraintLeft_toRightOf="@id/fragment_sim_offer_cart_iv"
+        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_cart_group" />
 
     <TextView
-        android:id="@+id/fragment_sim_offer_shopping_checkout_tv"
+        android:id="@+id/fragment_sim_offer_cart_checkout_tv"
         android:layout_width="@dimen/dimen_104"
         android:layout_height="@dimen/dimen_52"
         android:layout_marginRight="@dimen/dimen_10"
-        android:background="@drawable/shopping_checkout_bg"
+        android:background="@drawable/cart_checkout_bg"
         android:gravity="center"
         android:text="@string/checkout"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_14"
-        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_shopping_group"
-        app:layout_constraintRight_toRightOf="@id/fragment_sim_offer_shopping_group"
-        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_shopping_group" />
+        app:layout_constraintBottom_toBottomOf="@id/fragment_sim_offer_cart_group"
+        app:layout_constraintRight_toRightOf="@id/fragment_sim_offer_cart_group"
+        app:layout_constraintTop_toTopOf="@id/fragment_sim_offer_cart_group" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,8 +28,9 @@
     <string name="reduce">-</string>
     <string name="add">+</string>
     <string name="price">"₱%d"</string>
-    <string name="good_add_card">"%s is added to cart"</string>
-    <string name="shopping_quantity_least">\"Quantity is at least 1 \"</string>
+    <string name="goods_add_card">"%s is added to cart"</string>
+    <string name="cart_quantity_least">"Quantity is at least %d"</string>
+    <string name="cart_quantity_max">"Quantity is at max %d"</string>
     <string name="cart_check_tip">Oops! Up to 3 SIMs can be purchased per checkout</string>
     <string name="check_finish">Check Finish</string>
     <string name="cart_no_items">No items in cart</string>

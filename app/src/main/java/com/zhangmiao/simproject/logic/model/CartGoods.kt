@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class ShoppingGood(
+data class CartGoods(
 
     @PrimaryKey
     val id: String,
@@ -20,7 +20,7 @@ data class ShoppingGood(
 ) {
 
     override fun equals(other: Any?): Boolean {
-        return if (other is ShoppingGood) {
+        return if (other is CartGoods) {
             other.id == id && other.name == name && other.amount == amount
         } else {
             false

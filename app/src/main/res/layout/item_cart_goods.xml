@@ -7,7 +7,7 @@
     android:layout_height="@dimen/dimen_122">
 
     <CheckBox
-        android:id="@+id/item_shopping_good_select_cb"
+        android:id="@+id/item_cart_goods_select_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -15,28 +15,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/item_shopping_good_image_iv"
+        android:id="@+id/item_cart_goods_image_iv"
         android:layout_width="@dimen/dimen_88"
         android:layout_height="@dimen/dimen_71"
-        android:src="@mipmap/shopping_good_img"
+        android:src="@mipmap/cart_goods_img"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/item_shopping_good_select_cb"
+        app:layout_constraintLeft_toRightOf="@id/item_cart_goods_select_cb"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/item_shopping_good_name_tv"
+        android:id="@+id/item_cart_goods_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_20"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_13"
-        app:layout_constraintLeft_toRightOf="@id/item_shopping_good_image_iv"
+        app:layout_constraintLeft_toRightOf="@id/item_cart_goods_image_iv"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
-        android:id="@+id/item_shopping_good_price_tv"
+        android:id="@+id/item_cart_goods_price_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_20"
@@ -44,11 +44,11 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_17"
         android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@id/item_shopping_good_image_iv"
-        app:layout_constraintTop_toBottomOf="@id/item_shopping_good_name_tv" />
+        app:layout_constraintLeft_toRightOf="@id/item_cart_goods_image_iv"
+        app:layout_constraintTop_toBottomOf="@id/item_cart_goods_name_tv" />
 
     <TextView
-        android:id="@+id/item_shopping_good_reduce_tv"
+        android:id="@+id/item_cart_goods_reduce_tv"
         android:layout_width="@dimen/dimen_40"
         android:layout_height="@dimen/dimen_29"
         android:layout_marginLeft="@dimen/dimen_20"
@@ -58,12 +58,12 @@
         android:text="@string/reduce"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_15"
-        app:layout_constraintLeft_toRightOf="@id/item_shopping_good_image_iv"
-        app:layout_constraintTop_toBottomOf="@id/item_shopping_good_price_tv" />
+        app:layout_constraintLeft_toRightOf="@id/item_cart_goods_image_iv"
+        app:layout_constraintTop_toBottomOf="@id/item_cart_goods_price_tv" />
 
 
     <TextView
-        android:id="@+id/item_shopping_good_num_tv"
+        android:id="@+id/item_cart_goods_num_tv"
         android:layout_width="@dimen/dimen_40"
         android:layout_height="@dimen/dimen_29"
         android:layout_marginTop="@dimen/dimen_10"
@@ -71,12 +71,12 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_15"
-        app:layout_constraintLeft_toRightOf="@id/item_shopping_good_reduce_tv"
-        app:layout_constraintTop_toBottomOf="@id/item_shopping_good_price_tv" />
+        app:layout_constraintLeft_toRightOf="@id/item_cart_goods_reduce_tv"
+        app:layout_constraintTop_toBottomOf="@id/item_cart_goods_price_tv" />
 
 
     <TextView
-        android:id="@+id/item_shopping_good_add_tv"
+        android:id="@+id/item_cart_goods_add_tv"
         android:layout_width="@dimen/dimen_40"
         android:layout_height="@dimen/dimen_29"
         android:layout_marginTop="@dimen/dimen_10"
@@ -85,8 +85,8 @@
         android:text="@string/add"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_15"
-        app:layout_constraintLeft_toRightOf="@id/item_shopping_good_num_tv"
-        app:layout_constraintTop_toBottomOf="@id/item_shopping_good_price_tv" />
+        app:layout_constraintLeft_toRightOf="@id/item_cart_goods_num_tv"
+        app:layout_constraintTop_toBottomOf="@id/item_cart_goods_price_tv" />
 
     <View
         android:layout_width="match_parent"

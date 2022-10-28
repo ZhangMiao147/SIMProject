@@ -2,12 +2,11 @@ package com.zhangmiao.simproject.logic
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.google.gson.Gson
 import com.zhangmiao.simproject.SIMApplication
-import com.zhangmiao.simproject.logic.dao.ShoppingGoodDao
-import com.zhangmiao.simproject.logic.dao.ShoppingGoodDatabase
+import com.zhangmiao.simproject.logic.dao.CartGoodsDao
+import com.zhangmiao.simproject.logic.dao.CartGoodsDatabase
 import com.zhangmiao.simproject.logic.model.*
 import com.zhangmiao.simproject.logic.network.OffersNetwork
 import kotlinx.coroutines.Dispatchers
@@ -23,11 +22,11 @@ object Repository {
         val result = try {
             val offersResponse = OffersNetwork.getOffers(OffersRequest(type, operator_name))
             Log.d(TAG, "getOffers offersResponse:${offersResponse}")
-            val goods: List<Good> = switchToGoods(offersResponse)
+            val goods: List<Goods> = switchToGoods(offersResponse)
             Log.d(TAG, "getOffers goods:${goods}")
             Result.success(goods)
         } catch (e: Exception) {
-            Result.failure<List<Good>>(e)
+            Result.failure<List<Goods>>(e)
         }
         emit(result)
     }
@@ -35,8 +34,8 @@ object Repository {
     /**
      * network data switch show data
      */
-    private fun switchToGoods(getOffersResponse: GetOffersResponse): ArrayList<Good> {
-        val goods: ArrayList<Good> = ArrayList()
+    private fun switchToGoods(getOffersResponse: GetOffersResponse): ArrayList<Goods> {
+        val goodsList: ArrayList<Goods> = ArrayList()
         val gson = Gson()
         val offerById: String = gson.toJson(getOffersResponse.offer_by_id)
         try {
@@ -46,11 +45,11 @@ object Repository {
                 val offerObject = offerByIdObject.getJSONObject(it)
                 val offer: Offer = gson.fromJson(offerObject.toString(), Offer::class.java)
                 val regularPrice = offer.data.regular_price
-                var goodRegularPrice = Good.REGULAR_PRICE_NO
+                var goodRegularPrice = Goods.REGULAR_PRICE_NO
                 if (!regularPrice.isNullOrEmpty()) {
                     goodRegularPrice = regularPrice.toInt()
                 }
-                val good = Good(
+                val goods = Goods(
                     offer.id,
                     offer.data.name,
                     goodRegularPrice,
@@ -59,48 +58,48 @@ object Repository {
                     offer.data.Detail ?: ""
 
                 )
-                goods.add(good)
+                goodsList.add(goods)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return goods
+        return goodsList
     }
 
-    private var shoppingGoodDao: ShoppingGoodDao? = null
+    private var cartGoodDao: CartGoodsDao? = null
 
     init {
-        shoppingGoodDao = ShoppingGoodDatabase.getDatabase(SIMApplication.context).shoppingGoodDao()
-        Log.d(TAG, "init shoppingGoodDao:${shoppingGoodDao}")
+        cartGoodDao = CartGoodsDatabase.getDatabase(SIMApplication.context).cartGoodsDao()
+        Log.d(TAG, "init cartGoodDao:${cartGoodDao}")
     }
 
-    fun saveShoppingGood(shoppingGood: ShoppingGood) {
+    fun saveCartGoods(cartGoods: CartGoods) {
         GlobalScope.launch {
-            Log.d(TAG, "saveShoppingGood shoppingGoodDao:${shoppingGoodDao}")
-            shoppingGoodDao?.insertShoppingGood(shoppingGood)
+            Log.d(TAG, "saveCartGoods shoppingGoodDao:${cartGoodDao}")
+            cartGoodDao?.insertCartGoods(cartGoods)
         }
     }
 
-    fun updateShoppingGood(shoppingGood: ShoppingGood) {
+    fun updateCartGoods(cartGoods: CartGoods) {
         GlobalScope.launch {
-            shoppingGoodDao?.updateShoppingGood(shoppingGood)
+            cartGoodDao?.updateCartGoods(cartGoods)
         }
     }
 
-    fun getShoppingGoodList(): LiveData<List<ShoppingGood>>? {
-        return shoppingGoodDao?.getShoppingGoodList()
+    fun getCartGoodsList(): LiveData<List<CartGoods>>? {
+        return cartGoodDao?.getCartGoodsList()
     }
 
-    fun deleteAllShoppingGood() {
+    fun deleteAllCartGoods() {
         GlobalScope.launch {
-            shoppingGoodDao?.deleteAllShoppingGood()
+            cartGoodDao?.deleteAllCartGoods()
         }
     }
 
-    fun deleteShoppingGood(shoppingGood: ShoppingGood) {
+    fun deleteCartGoods(cartGoods: CartGoods) {
         GlobalScope.launch {
-            shoppingGoodDao?.deleteShoppingGood(shoppingGood)
+            cartGoodDao?.deleteCartGoods(cartGoods)
         }
     }
 
