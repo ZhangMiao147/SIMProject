@@ -5,13 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.zhangmiao.simproject.R
 import com.zhangmiao.simproject.SIMApplication
+import com.zhangmiao.simproject.common.extension.showToast
 import com.zhangmiao.simproject.logic.model.CartGoods
 
-class CartAdapter(var cartGoods: ArrayList<CartGoods> = ArrayList(), val viewModel:SIMOfferViewModel) :
+class CartAdapter(
+    var cartGoods: ArrayList<CartGoods> = ArrayList(),
+    private val callback: CartCallback
+) :
     RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     private val GOODS_LEAST_NUM = 1
@@ -27,24 +30,27 @@ class CartAdapter(var cartGoods: ArrayList<CartGoods> = ArrayList(), val viewMod
         val cartGoods: CartGoods = cartGoods.get(position)
         holder.cb_select.isChecked = cartGoods.select
         holder.cb_select.setOnClickListener {
-            viewModel.changeCartGoodsSelect(cartGoods.id,holder.cb_select.isChecked)
+            callback.changeCartGoodsSelect(cartGoods.id, holder.cb_select.isChecked)
         }
         holder.tv_goodsName.text = cartGoods.name
-        holder.tv_price.text = SIMApplication.context.resources.getString(R.string.price,cartGoods.amount)
+        holder.tv_price.text =
+            SIMApplication.context.resources.getString(R.string.price, cartGoods.amount)
 
         holder.tv_reduce.setOnClickListener {
-            if(cartGoods.num == GOODS_LEAST_NUM){
-                Toast.makeText(SIMApplication.context,SIMApplication.context.getString(R.string.cart_quantity_least,GOODS_LEAST_NUM),Toast.LENGTH_SHORT).show()
+            if (cartGoods.num == GOODS_LEAST_NUM) {
+                SIMApplication.context.getString(R.string.cart_quantity_least, GOODS_LEAST_NUM)
+                    .showToast()
             } else {
-                viewModel.reduceCartGoodsNum(cartGoods.id)
+                callback.reduceCartGoodsNum(cartGoods.id)
             }
         }
         holder.tv_num.text = cartGoods.num.toString()
         holder.tv_add.setOnClickListener {
-            if(cartGoods.num == GOODS_MAX_NUM){
-                Toast.makeText(SIMApplication.context,SIMApplication.context.getString(R.string.cart_quantity_max,GOODS_MAX_NUM),Toast.LENGTH_SHORT).show()
+            if (cartGoods.num == GOODS_MAX_NUM) {
+                SIMApplication.context.getString(R.string.cart_quantity_max, GOODS_MAX_NUM)
+                    .showToast()
             } else {
-                viewModel.addCartGoodsNum(cartGoods.id)
+                callback.addCartGoodsNum(cartGoods.id)
             }
         }
     }
@@ -58,5 +64,11 @@ class CartAdapter(var cartGoods: ArrayList<CartGoods> = ArrayList(), val viewMod
         var tv_reduce: TextView = view.findViewById(R.id.item_cart_goods_reduce_tv)
         var tv_num: TextView = view.findViewById(R.id.item_cart_goods_num_tv)
         var tv_add: TextView = view.findViewById(R.id.item_cart_goods_add_tv)
+    }
+
+    interface CartCallback {
+        fun changeCartGoodsSelect(id: String, select: Boolean)
+        fun reduceCartGoodsNum(id: String)
+        fun addCartGoodsNum(id: String)
     }
 }

@@ -1,8 +1,6 @@
 package com.zhangmiao.simproject.logic.network
 
 import android.util.Log
-import com.google.gson.Gson
-import com.zhangmiao.simproject.SIMApplication
 import com.zhangmiao.simproject.logic.model.GetOffersResponse
 import com.zhangmiao.simproject.logic.model.OffersRequest
 import retrofit2.Call

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.zhangmiao.simproject.R
+import com.zhangmiao.simproject.common.extension.showToast
 import com.zhangmiao.simproject.common.ui.BaseFragment
 import com.zhangmiao.simproject.logic.model.Goods
 import com.zhangmiao.simproject.logic.model.OffersRequest
@@ -26,16 +27,17 @@ import com.zhangmiao.simproject.ui.detail.DetailFragment
 
 class SIMOfferFragment : BaseFragment() {
 
-    private lateinit var goodsAdapter: GoodsAdapter
+    private val MAX_CART_NUM = 3
+    private val GOOD_LIST_COLUMN_COUNT = 2
+
     private lateinit var rv_list: RecyclerView
     private lateinit var tv_selectNum: TextView
     private lateinit var tv_totalAmount: TextView
-    private lateinit var cartAdapter: CartAdapter
     private lateinit var cb_selectAll: CheckBox
     private lateinit var srl_refreshLayout: SwipeRefreshLayout
 
-    private val MAX_CART_NUM = 3
-    private val GOOD_LIST_COLUMN_COUNT = 2
+    private lateinit var goodsAdapter: GoodsAdapter
+    private lateinit var cartAdapter: CartAdapter
 
     val viewModel by lazy {
         ViewModelProvider(this).get(SIMOfferViewModel::class.java)
@@ -58,7 +60,7 @@ class SIMOfferFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addObserve()
-        viewModel.getGoods(OffersRequest("offers", "globegomo"))
+        getGoods()
         viewModel.getCartGoodsList()
     }
 
@@ -73,11 +75,7 @@ class SIMOfferFragment : BaseFragment() {
         goodsAdapter = GoodsAdapter(viewModel.goodsList, object : GoodsAdapter.GoodsCallback {
             override fun addCartGoods(goods: Goods) {
                 viewModel.addCartGoodsData(goods)
-                Toast.makeText(
-                    context,
-                    getString(R.string.goods_add_card, goods.name),
-                    Toast.LENGTH_SHORT
-                ).show()
+                getString(R.string.goods_add_card, goods.name).showToast()
             }
 
             override fun gotoDetail(goods: Goods) {
@@ -112,8 +110,7 @@ class SIMOfferFragment : BaseFragment() {
         iv_cart.setOnClickListener {
             if (cartListGroup.visibility != View.VISIBLE) {
                 if (viewModel.cartGoodsList.isNullOrEmpty()) {
-                    Toast.makeText(context, getString(R.string.cart_no_items), Toast.LENGTH_SHORT)
-                        .show()
+                    getString(R.string.cart_no_items).showToast()
                 } else {
                     cartListGroup.visibility = View.VISIBLE
                 }
@@ -130,25 +127,29 @@ class SIMOfferFragment : BaseFragment() {
         tv_checkout.setOnClickListener {
             val selectNum = viewModel.getCartSelectNum()
             if (selectNum > MAX_CART_NUM) {
-                Toast.makeText(
-                    context,
-                    getString(R.string.cart_check_tip),
-                    Toast.LENGTH_SHORT
-                ).show()
+                getString(R.string.cart_check_tip).showToast()
             } else {
                 viewModel.clearCartSelectGoods()
-                Toast.makeText(
-                    context,
-                    getString(R.string.check_finish),
-                    Toast.LENGTH_SHORT
-                ).show()
+                getString(R.string.check_finish).showToast()
             }
         }
 
         val rv_cartList: RecyclerView =
             view.findViewById(R.id.fragment_sim_offer_cart_list_rv)
         rv_cartList.layoutManager = LinearLayoutManager(context)
-        cartAdapter = CartAdapter(viewModel.cartGoodsList, viewModel)
+        cartAdapter = CartAdapter(viewModel.cartGoodsList, object:CartAdapter.CartCallback{
+            override fun changeCartGoodsSelect(id: String, select: Boolean) {
+                viewModel.changeCartGoodsSelect(id, select)
+            }
+
+            override fun reduceCartGoodsNum(id: String) {
+                viewModel.reduceCartGoodsNum(id)
+            }
+
+            override fun addCartGoodsNum(id: String) {
+                viewModel.addCartGoodsNum(id)
+            }
+        })
         rv_cartList.adapter = cartAdapter
 
         val tv_clear: TextView = view.findViewById(R.id.fragment_sim_offer_cart_clear_tv)
@@ -166,11 +167,14 @@ class SIMOfferFragment : BaseFragment() {
         srl_refreshLayout.setProgressBackgroundColorSchemeResource(androidx.constraintlayout.widget.R.color.material_blue_grey_800)
         srl_refreshLayout.setOnRefreshListener {
             hideTipView()
-            viewModel.getGoods(OffersRequest("offers", "globegomo"))
+            getGoods()
         }
 
     }
 
+    private fun getGoods(){
+        viewModel.getGoods(OffersRequest("offers", "globegomo"))
+    }
 
     private fun addObserve() {
         viewModel.goodsLiveData.observe(this, androidx.lifecycle.Observer { result ->

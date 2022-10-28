@@ -37,7 +37,6 @@ class SIMOfferViewModel : ViewModel() {
         getCartGoods.value = System.currentTimeMillis().toString()
     }
 
-
     fun addCartGoodsData(good: Goods) {
         val cartGoods = CartGoods(good.id, good.name, good.amount_primary, 1, true)
         val index = cartGoodsList.indexOf(cartGoods)
