@@ -126,7 +126,9 @@ class SIMOfferFragment : BaseFragment() {
         val tv_checkout: TextView = view.findViewById(R.id.fragment_sim_offer_cart_checkout_tv)
         tv_checkout.setOnClickListener {
             val selectNum = viewModel.getCartSelectNum()
-            if (selectNum > MAX_CART_NUM) {
+            if (selectNum == 0) {
+                getString(R.string.cart_no_items).showToast()
+            } else if (selectNum > MAX_CART_NUM) {
                 getString(R.string.cart_check_tip).showToast()
             } else {
                 viewModel.clearCartSelectGoods()
@@ -137,7 +139,7 @@ class SIMOfferFragment : BaseFragment() {
         val rv_cartList: RecyclerView =
             view.findViewById(R.id.fragment_sim_offer_cart_list_rv)
         rv_cartList.layoutManager = LinearLayoutManager(context)
-        cartAdapter = CartAdapter(viewModel.cartGoodsList, object:CartAdapter.CartCallback{
+        cartAdapter = CartAdapter(viewModel.cartGoodsList, object : CartAdapter.CartCallback {
             override fun changeCartGoodsSelect(id: String, select: Boolean) {
                 viewModel.changeCartGoodsSelect(id, select)
             }
@@ -172,7 +174,7 @@ class SIMOfferFragment : BaseFragment() {
 
     }
 
-    private fun getGoods(){
+    private fun getGoods() {
         viewModel.getGoods(OffersRequest("offers", "globegomo"))
     }
 
