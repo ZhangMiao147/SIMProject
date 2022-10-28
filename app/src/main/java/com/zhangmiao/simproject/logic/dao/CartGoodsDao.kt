@@ -1,6 +1,5 @@
 package com.zhangmiao.simproject.logic.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -18,7 +17,7 @@ interface CartGoodsDao {
     fun updateCartGoods(cartGoods: CartGoods)
 
     @Query("select * from CartGoods")
-    fun getCartGoodsList(): LiveData<List<CartGoods>>
+    suspend fun getCartGoodsList(): List<CartGoods>
 
     @Delete
     fun deleteCartGoods(cartGoods: CartGoods)

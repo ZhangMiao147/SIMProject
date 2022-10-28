@@ -84,10 +84,6 @@ open class BaseFragment : Fragment() {
         Log.d(TAG, "onDestroy")
     }
 
-
-    /**
-     * 展示 loading
-     */
     fun showLoading() {
         Log.d(TAG, "showLoading pb_loading:${pb_loading}")
         if (pb_loading?.visibility != View.VISIBLE) {
@@ -95,9 +91,6 @@ open class BaseFragment : Fragment() {
         }
     }
 
-    /**
-     * 隐藏 loading
-     */
     fun hideLoading() {
         Log.d(TAG, "hideLoading pb_loading:${pb_loading}")
         if (pb_loading?.visibility != View.GONE) {
@@ -105,9 +98,6 @@ open class BaseFragment : Fragment() {
         }
     }
 
-    /**
-     * 展示兜底页
-     */
     fun showTipView(message: String) {
         if (tv_tip == null) {
             tv_tip = vs_tip?.inflate() as TextView
@@ -116,9 +106,6 @@ open class BaseFragment : Fragment() {
         tv_tip?.text = message
     }
 
-    /**
-     * 隐藏兜底页
-     */
     fun hideTipView() {
         tv_tip?.visibility = View.GONE
     }

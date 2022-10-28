@@ -1,68 +1,76 @@
 package com.zhangmiao.simproject.ui.simoffer
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.zhangmiao.simproject.logic.Repository
 import com.zhangmiao.simproject.logic.model.CartGoods
 import com.zhangmiao.simproject.logic.model.Goods
-import com.zhangmiao.simproject.logic.model.OffersRequest
+import com.zhangmiao.simproject.logic.model.GoodsListResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SIMOfferViewModel : ViewModel() {
 
     val TAG = SIMOfferViewModel::class.simpleName
 
-    private val getLiveData = MutableLiveData<OffersRequest>()
+    init {
+        getCartGoodsList()
+        getGoods()
+    }
 
     val goodsList = ArrayList<Goods>()
 
-    val goodsLiveData = Transformations.switchMap(this.getLiveData) { offersRequest ->
-        Log.d(TAG, "switchMap getOffers")
-        Repository.getOffers(offersRequest.type, offersRequest.operator_name)
-    }
+    val  _goodsListLiveData: MutableLiveData<GoodsListResponse> = MutableLiveData()
+    val  goodsListLiveData: LiveData<GoodsListResponse> = _goodsListLiveData
 
-    fun getGoods(offersRequest: OffersRequest) {
-        getLiveData.value = offersRequest
+    fun getGoods() {
+        viewModelScope.launch {
+            _goodsListLiveData.value = Repository.getOffers("offers", "globegomo")
+        }
     }
 
     val cartGoodsList = ArrayList<CartGoods>()
 
-    private val getCartGoods = MutableLiveData<String>()
+    val  _cartGoodsLiveData: MutableLiveData<List<CartGoods>> = MutableLiveData()
+    val  cartGoodsLiveData: LiveData<List<CartGoods>> = _cartGoodsLiveData
 
-    val cartGoodsLiveData = Transformations.switchMap(getCartGoods) {
-        Log.d(TAG, "cartGoodsLiveData switchMap it:${it}")
-        Repository.getCartGoodsList()
-    }
-
-    fun getCartGoodsList() {
-        getCartGoods.value = System.currentTimeMillis().toString()
+    private fun getCartGoodsList() {
+        viewModelScope.launch (Dispatchers.IO){
+            _cartGoodsLiveData.value = Repository.getCartGoodsList()
+        }
     }
 
     fun addCartGoodsData(good: Goods) {
-        val cartGoods = CartGoods(good.id, good.name, good.amount_primary, 1, true)
-        val index = cartGoodsList.indexOf(cartGoods)
-        if (index == -1) {
-            Repository.saveCartGoods(cartGoods)
-        } else {
-            val oldCartGoods = cartGoodsList.get(index)
-            cartGoods.num = oldCartGoods.num + 1
-            Repository.updateCartGoods(cartGoods)
+        viewModelScope.launch(Dispatchers.IO) {
+            val cartGoods = CartGoods(good.id, good.name, good.amount_primary, 1, true)
+            val index = cartGoodsList.indexOf(cartGoods)
+            if (index == -1) {
+                Repository.saveCartGoods(cartGoods)
+            } else {
+                val oldCartGoods = cartGoodsList.get(index)
+                cartGoods.num = oldCartGoods.num + 1
+                Repository.updateCartGoods(cartGoods)
+            }
         }
     }
 
     fun addCartGoodsNum(goodId: String) {
-        cartGoodsList.forEach {
-            if (it.id == goodId) {
-                it.num++
-                Repository.updateCartGoods(it)
+        viewModelScope.launch(Dispatchers.IO) {
+            cartGoodsList.forEach {
+                if (it.id == goodId) {
+                    it.num++
+                    Repository.updateCartGoods(it)
+                }
             }
         }
     }
 
     fun reduceCartGoodsNum(goodId: String) {
-        cartGoodsList.forEach {
-            if (it.id == goodId) {
-                it.num--
-                Repository.updateCartGoods(it)
+        viewModelScope.launch(Dispatchers.IO) {
+            cartGoodsList.forEach {
+                if (it.id == goodId) {
+                    it.num--
+                    Repository.updateCartGoods(it)
+                }
             }
         }
     }
@@ -88,26 +96,35 @@ class SIMOfferViewModel : ViewModel() {
     }
 
     fun changeCartGoodsSelect(goodId: String, select: Boolean) {
-        cartGoodsList.forEach {
-            if (it.id == goodId) {
-                it.select = select
-                Repository.updateCartGoods(it)
+        viewModelScope.launch(Dispatchers.IO){
+            cartGoodsList.forEach {
+                if (it.id == goodId) {
+                    it.select = select
+                    Repository.updateCartGoods(it)
+                }
             }
         }
+
     }
 
     fun clearCartGoods() {
-        Repository.deleteAllCartGoods()
+        viewModelScope.launch(Dispatchers.IO){
+            Repository.deleteAllCartGoods()
+        }
     }
 
     fun clearCartSelectGoods() {
-        Repository.deleteCartSelectGoods()
+        viewModelScope.launch(Dispatchers.IO){
+            Repository.deleteCartSelectGoods()
+        }
     }
 
     fun changeSelectAllCartGoods(select: Boolean) {
-        cartGoodsList.forEach {
-            it.select = select
-            Repository.updateCartGoods(it)
+        viewModelScope.launch(Dispatchers.IO){
+            cartGoodsList.forEach {
+                it.select = select
+                Repository.updateCartGoods(it)
+            }
         }
     }
 

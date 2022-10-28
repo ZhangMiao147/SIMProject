@@ -8,6 +8,7 @@
     <string name="previous">Previous</string>
 
     <string name="sim_offer">SIM Offer</string>
+    <string name="data_empty_tip">Data is empty, please try to pull down and refresh</string>
     <string name="data_exception_tip">Data exception, please try to pull down and refresh</string>
     <string name="product_overview_title">Product Overview</string>
     <string name="product_details_title">Product Details</string>

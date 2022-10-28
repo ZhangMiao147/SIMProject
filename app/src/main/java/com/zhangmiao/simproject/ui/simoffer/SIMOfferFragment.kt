@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +21,7 @@ import com.zhangmiao.simproject.R
 import com.zhangmiao.simproject.common.extension.showToast
 import com.zhangmiao.simproject.common.ui.BaseFragment
 import com.zhangmiao.simproject.logic.model.Goods
-import com.zhangmiao.simproject.logic.model.OffersRequest
+import com.zhangmiao.simproject.logic.model.GoodsListResponse
 import com.zhangmiao.simproject.ui.detail.DetailFragment
 
 class SIMOfferFragment : BaseFragment() {
@@ -30,7 +29,7 @@ class SIMOfferFragment : BaseFragment() {
     private val MAX_CART_NUM = 3
     private val GOOD_LIST_COLUMN_COUNT = 2
 
-    private lateinit var rv_list: RecyclerView
+    private lateinit var rv_goodsList: RecyclerView
     private lateinit var tv_selectNum: TextView
     private lateinit var tv_totalAmount: TextView
     private lateinit var cb_selectAll: CheckBox
@@ -60,18 +59,16 @@ class SIMOfferFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addObserve()
-        getGoods()
-        viewModel.getCartGoodsList()
     }
 
     override fun initView(view: View) {
         super.initView(view)
-        rv_list = view.findViewById(R.id.fragment_sim_offer_list_rv)
+        rv_goodsList = view.findViewById(R.id.fragment_sim_offer_goods_list_rv)
         val cartListGroup: Group =
             view.findViewById(R.id.fragment_sim_offer_cart_list_group)
 
         val layoutManager = GridLayoutManager(context, GOOD_LIST_COLUMN_COUNT)
-        rv_list.layoutManager = layoutManager
+        rv_goodsList.layoutManager = layoutManager
         goodsAdapter = GoodsAdapter(viewModel.goodsList, object : GoodsAdapter.GoodsCallback {
             override fun addCartGoods(goods: Goods) {
                 viewModel.addCartGoodsData(goods)
@@ -86,11 +83,13 @@ class SIMOfferFragment : BaseFragment() {
                         R.id.action_SIMOfferFragment_to_DetailFragment,
                         args
                     )
+                } else {
+                    cartListGroup.visibility = View.GONE
                 }
             }
         })
-        rv_list.adapter = goodsAdapter
-        rv_list.addItemDecoration(object : RecyclerView.ItemDecoration() {
+        rv_goodsList.adapter = goodsAdapter
+        rv_goodsList.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect,
                 view: View,
@@ -169,31 +168,33 @@ class SIMOfferFragment : BaseFragment() {
         srl_refreshLayout.setProgressBackgroundColorSchemeResource(androidx.constraintlayout.widget.R.color.material_blue_grey_800)
         srl_refreshLayout.setOnRefreshListener {
             hideTipView()
-            getGoods()
+            viewModel.getGoods()
         }
 
     }
 
-    private fun getGoods() {
-        viewModel.getGoods(OffersRequest("offers", "globegomo"))
-    }
-
     private fun addObserve() {
-        viewModel.goodsLiveData.observe(this, androidx.lifecycle.Observer { result ->
+        viewModel.goodsListLiveData.observe(this, androidx.lifecycle.Observer { result ->
             Log.d(TAG, "addObserve goodLiveData observe result:${result}")
-            val goodsList = result.getOrNull()
-            Log.d(TAG, "addObserve goodLiveData observe goods:${goodsList}")
             hideLoading()
             srl_refreshLayout.isRefreshing = false
-            if (!goodsList.isNullOrEmpty()) {
-                viewModel.goodsList.clear()
-                viewModel.goodsList.addAll(goodsList)
-                goodsAdapter.goodsList = goodsList
-                goodsAdapter.notifyDataSetChanged()
-            } else {
-                showTipView(getString(R.string.data_exception_tip))
+            when (result) {
+                is GoodsListResponse.Response -> {
+                    val goodsList = result.goodsList
+                    if (!goodsList.isNullOrEmpty()) {
+                        viewModel.goodsList.clear()
+                        viewModel.goodsList.addAll(goodsList)
+                        goodsAdapter.goodsList = goodsList
+                        goodsAdapter.notifyDataSetChanged()
+                    } else {
+                        showTipView(getString(R.string.data_empty_tip))
+                    }
+                }
+                is GoodsListResponse.Failure -> {
+                    showTipView(getString(R.string.data_exception_tip))
+                }
+                else -> {}
             }
-
         })
 
         viewModel.cartGoodsLiveData.observe(this, Observer {

@@ -18,17 +18,16 @@ object Repository {
 
     private val TAG = "Repository"
 
-    fun getOffers(type: String, operator_name: String) = liveData(Dispatchers.IO) {
-        val result = try {
+    suspend fun getOffers(type: String, operator_name: String): GoodsListResponse {
+        return try {
             val offersResponse = OffersNetwork.getOffers(OffersRequest(type, operator_name))
             Log.d(TAG, "getOffers offersResponse:${offersResponse}")
             val goods: List<Goods> = switchToGoods(offersResponse)
             Log.d(TAG, "getOffers goods:${goods}")
-            Result.success(goods)
+            GoodsListResponse.Response(goods)
         } catch (e: Exception) {
-            Result.failure<List<Goods>>(e)
+            GoodsListResponse.Failure
         }
-        emit(result)
     }
 
     /**
@@ -44,15 +43,16 @@ object Repository {
             keys.forEach {
                 val offerObject = offerByIdObject.getJSONObject(it)
                 val offer: Offer = gson.fromJson(offerObject.toString(), Offer::class.java)
-                val regularPrice = offer.data.regular_price
-                var goodRegularPrice = Goods.REGULAR_PRICE_NO
-                if (!regularPrice.isNullOrEmpty()) {
-                    goodRegularPrice = regularPrice.toInt()
-                }
                 val goods = Goods(
                     offer.id,
                     offer.data.name,
-                    goodRegularPrice,
+                    with(offer.data.regular_price) {
+                        if (this.isNullOrEmpty()) {
+                            Goods.REGULAR_PRICE_NO
+                        } else {
+                            toInt()
+                        }
+                    },
                     offer.data.amounts.primary.toInt(),
                     offer.data.description,
                     offer.data.Detail ?: ""
@@ -74,39 +74,29 @@ object Repository {
         Log.d(TAG, "init cartGoodDao:${cartGoodDao}")
     }
 
-    fun saveCartGoods(cartGoods: CartGoods) {
-        GlobalScope.launch {
-            Log.d(TAG, "saveCartGoods shoppingGoodDao:${cartGoodDao}")
-            cartGoodDao?.insertCartGoods(cartGoods)
-        }
+    suspend fun saveCartGoods(cartGoods: CartGoods) {
+        Log.d(TAG, "saveCartGoods shoppingGoodDao:${cartGoodDao}")
+        cartGoodDao?.insertCartGoods(cartGoods)
     }
 
-    fun updateCartGoods(cartGoods: CartGoods) {
-        GlobalScope.launch {
-            cartGoodDao?.updateCartGoods(cartGoods)
-        }
+    suspend fun updateCartGoods(cartGoods: CartGoods) {
+        cartGoodDao?.updateCartGoods(cartGoods)
     }
 
-    fun getCartGoodsList(): LiveData<List<CartGoods>>? {
+    suspend fun getCartGoodsList(): List<CartGoods>? {
         return cartGoodDao?.getCartGoodsList()
     }
 
-    fun deleteAllCartGoods() {
-        GlobalScope.launch {
-            cartGoodDao?.deleteAllCartGoods()
-        }
+    suspend fun deleteAllCartGoods() {
+        cartGoodDao?.deleteAllCartGoods()
     }
 
-    fun deleteCartSelectGoods() {
-        GlobalScope.launch {
-            cartGoodDao?.deleteCartGoods()
-        }
+    suspend fun deleteCartSelectGoods() {
+        cartGoodDao?.deleteCartGoods()
     }
 
-    fun deleteCartGoods(cartGoods: CartGoods) {
-        GlobalScope.launch {
-            cartGoodDao?.deleteCartGoods(cartGoods)
-        }
+    suspend fun deleteCartGoods(cartGoods: CartGoods) {
+        cartGoodDao?.deleteCartGoods(cartGoods)
     }
 
 }
